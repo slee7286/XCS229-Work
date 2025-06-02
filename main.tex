@@ -1,0 +1,522 @@
+% This contents of this file will be inserted into the _Solutions version of the
+% output tex document.  Here's an example:
+
+% If assignment with subquestion (1.a) requires a written response, you will
+% find the following flag within this document: <SCPD_SUBMISSION_TAG>_1a
+% In this example, you would insert the LaTeX for your solution to (1.a) between
+% the <SCPD_SUBMISSION_TAG>_1a flags.  If you also constrain your answer between the
+% START_CODE_HERE and END_CODE_HERE flags, your LaTeX will be styled as a
+% solution within the final document.
+
+% Please do not use the '<SCPD_SUBMISSION_TAG>' character anywhere within your code.  As expected,
+% that will confuse the regular expressions we use to identify your solution.
+\def\assignmentnum{2 }
+\def\assignmenttitle{XCS229 Problem Set \assignmentnum}
+\documentclass{article}
+\usepackage[top = 1.0in]{geometry}
+
+\usepackage{graphicx}
+
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{bm}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{framed}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\newcommand{\di}{{d}}
+\newcommand{\nexp}{{n}}
+\newcommand{\nf}{{p}}
+\newcommand{\vcd}{{\textbf{D}}}
+\newcommand{\Int}{\mathbb{Z}}
+\newcommand\bb{\ensuremath{\mathbf{b}}}
+\newcommand\bs{\ensuremath{\mathbf{s}}}
+\newcommand\bp{\ensuremath{\mathbf{p}}}
+\newcommand{\relu} { \operatorname{ReLU} }
+\newcommand{\smx} { \operatorname{softmax} }
+\newcommand\bx{\ensuremath{\mathbf{x}}}
+\newcommand\bh{\ensuremath{\mathbf{h}}}
+\newcommand\bc{\ensuremath{\mathbf{c}}}
+\newcommand\bW{\ensuremath{\mathbf{W}}}
+\newcommand\by{\ensuremath{\mathbf{y}}}
+\newcommand\bo{\ensuremath{\mathbf{o}}}
+\newcommand\be{\ensuremath{\mathbf{e}}}
+\newcommand\ba{\ensuremath{\mathbf{a}}}
+\newcommand\bu{\ensuremath{\mathbf{u}}}
+\newcommand\bv{\ensuremath{\mathbf{v}}}
+\newcommand\bP{\ensuremath{\mathbf{P}}}
+\newcommand\bg{\ensuremath{\mathbf{g}}}
+\newcommand\bX{\ensuremath{\mathbf{X}}}
+% real numbers R symbol
+\newcommand{\Real}{\mathbb{R}}
+
+% encoder hidden
+\newcommand{\henc}{\bh^{\text{enc}}}
+\newcommand{\hencfw}[1]{\overrightarrow{\henc_{#1}}}
+\newcommand{\hencbw}[1]{\overleftarrow{\henc_{#1}}}
+
+% encoder cell
+\newcommand{\cenc}{\bc^{\text{enc}}}
+\newcommand{\cencfw}[1]{\overrightarrow{\cenc_{#1}}}
+\newcommand{\cencbw}[1]{\overleftarrow{\cenc_{#1}}}
+
+% decoder hidden
+\newcommand{\hdec}{\bh^{\text{dec}}}
+
+% decoder cell
+\newcommand{\cdec}{\bc^{\text{dec}}}
+
+\usepackage[hyperfootnotes=false]{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor = blue,
+  urlcolor  = blue,
+  citecolor = blue,
+  anchorcolor = blue,
+  pdfborderstyle={/S/U/W 1}
+}
+\usepackage{nccmath}
+\usepackage{mathtools}
+\usepackage{graphicx,caption}
+\usepackage[shortlabels]{enumitem}
+\usepackage{epstopdf,subcaption}
+\usepackage{psfrag}
+\usepackage{amsmath,amssymb,epsf}
+\usepackage{verbatim}
+\usepackage{cancel}
+\usepackage{color,soul}
+\usepackage{bbm}
+\usepackage{listings}
+\usepackage{setspace}
+\usepackage{float}
+\definecolor{Code}{rgb}{0,0,0}
+\definecolor{Decorators}{rgb}{0.5,0.5,0.5}
+\definecolor{Numbers}{rgb}{0.5,0,0}
+\definecolor{MatchingBrackets}{rgb}{0.25,0.5,0.5}
+\definecolor{Keywords}{rgb}{0,0,1}
+\definecolor{self}{rgb}{0,0,0}
+\definecolor{Strings}{rgb}{0,0.63,0}
+\definecolor{Comments}{rgb}{0,0.63,1}
+\definecolor{Backquotes}{rgb}{0,0,0}
+\definecolor{Classname}{rgb}{0,0,0}
+\definecolor{FunctionName}{rgb}{0,0,0}
+\definecolor{Operators}{rgb}{0,0,0}
+\definecolor{Background}{rgb}{0.98,0.98,0.98}
+\lstdefinelanguage{Python}{
+    numbers=left,
+    numberstyle=\footnotesize,
+    numbersep=1em,
+    xleftmargin=1em,
+    framextopmargin=2em,
+    framexbottommargin=2em,
+    showspaces=false,
+    showtabs=false,
+    showstringspaces=false,
+    frame=l,
+    tabsize=4,
+    % Basic
+    basicstyle=\ttfamily\footnotesize\setstretch{1},
+    backgroundcolor=\color{Background},
+    % Comments
+    commentstyle=\color{Comments}\slshape,
+    % Strings
+    stringstyle=\color{Strings},
+    morecomment=[s][\color{Strings}]{"""}{"""},
+    morecomment=[s][\color{Strings}]{'''}{'''},
+    % keywords
+    morekeywords={import,from,class,def,for,while,if,is,in,elif,else,not,and,or
+    ,print,break,continue,return,True,False,None,access,as,,del,except,exec
+    ,finally,global,import,lambda,pass,print,raise,try,assert},
+    keywordstyle={\color{Keywords}\bfseries},
+    % additional keywords
+    morekeywords={[2]@invariant},
+    keywordstyle={[2]\color{Decorators}\slshape},
+    emph={self},
+    emphstyle={\color{self}\slshape},
+%
+}
+\lstMakeShortInline|
+
+\pagestyle{empty} \addtolength{\textwidth}{1.0in}
+\addtolength{\textheight}{0.5in}
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\newcommand{\ruleskip}{\bigskip\hrule\bigskip}
+\newcommand{\nodify}[1]{{\sc #1}}
+\newenvironment{answer}{\sf \begingroup\color{ForestGreen}}{\endgroup}%
+
+\setlist[itemize]{itemsep=2pt, topsep=0pt}
+\setlist[enumerate]{itemsep=6pt, topsep=0pt}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\setlist[enumerate]{parsep=4pt}
+\setlength{\unitlength}{1cm}
+
+\renewcommand{\Re}{{\mathbb R}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\what}[1]{\widehat{#1}}
+
+\renewcommand{\comment}[1]{}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\half}{\frac{1}{2}}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\def\KL{D_{KL}}
+\def\xsi{x^{(i)}}
+\def\ysi{y^{(i)}}
+\def\zsi{z^{(i)}}
+\def\E{\mathbb{E}}
+\def\calN{\mathcal{N}}
+\def\calD{\mathcal{D}}
+\def\slack{\url{http://xcs229-scpd.slack.com/}}
+\def\zipscriptalt{\texttt{python zip\_submission.py}}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
+ 
+\usepackage{bbding}
+\usepackage{pifont}
+\usepackage{wasysym}
+\usepackage{amssymb}
+\usepackage{framed}
+\usepackage{scrextend}
+
+\newcommand{\alns}[1] {
+	\begin{align*} #1 \end{align*}
+}
+
+\newcommand{\pd}[2] {
+ \frac{\partial #1}{\partial #2}
+}
+\renewcommand{\Re} { \mathbb{R} }
+\newcommand{\btx} { \mathbf{\tilde{x}} }
+\newcommand{\bth} { \mathbf{\tilde{h}} }
+\newcommand{\sigmoid} { \operatorname{\sigma} }
+\newcommand{\CE} { \operatorname{CE} }
+\newcommand{\byt} { \hat{\by} }
+\newcommand{\yt} { \hat{y} }
+
+\newcommand{\oft}[1]{^{(#1)}}
+\newcommand{\fone}{\ensuremath{F_1}}
+
+\newcommand{\ac}[1]{ {\color{red} \textbf{AC:} #1} }
+\newcommand{\ner}[1]{\textbf{\color{blue} #1}}
+\begin{document}
+\pagestyle{myheadings} \markboth{}{\assignmenttitle}
+
+% <SCPD_SUBMISSION_TAG>_entire_submission
+
+\ruleskip
+
+\LARGE
+1.a
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_1a
+\begin{answer}
+  Since $g'(z) = g(z)(1-g(z))$ and $h(x) = g(\theta^T x)$, it follows that $\partial h(x) / \partial \theta_k = h(x)(1 - h(x)) x_k$.
+
+  Letting $h_{\theta}(x^{(i)}) = g(\theta^T x^{(i)})
+  = 1/(1 + \exp(-\theta^T x^{(i)}))$, we have\\
+
+  \begin{flalign*}
+    \frac{\partial\log h_{\theta}(x^{(i)})}{\partial\theta_k} &=
+    % ### START CODE HERE ###
+    \frac{1}{h_\theta(x^{(i)})} \frac{\partial h(x)}{\partial \theta_k} = \frac{h(x)(1-h(x))x_k}{h(x)} = (1-h(x))x_k = \frac{x_k \exp(-\theta^T x^{(i)})}{(1 + \exp(-\theta^T x^{(i)}))} \\
+    % ### END CODE HERE ###
+    \frac{\partial\log(1 - h_{\theta}(x^{(i)}))}{\partial\theta_k} &= 
+    % ### START CODE HERE ###
+    \frac{1}{1-h_\theta(x^{(i)})} -\frac{\partial h(x)}{\partial \theta_k} = \frac{h(x)(1-h(x))x_k}{h(x)-1} = -h(x)x_k = \frac{-x_k}{(1 + \exp(-\theta^T x^{(i)}))} \\
+    % ### END CODE HERE ###
+  \end{flalign*}
+
+  Substituting into our equation for $J(\theta)$, we have
+  %
+  \begin{flalign*}
+    \frac{\partial J(\theta)}{\partial\theta_k} &=
+    % ### START CODE HERE ###
+    -\frac{1}{n}\sum_{i=1}^n (y^{(i)} (1-h(x))x_k+ (1-y^{(i)})(-h(x)x_k)) = -\frac{1}{n}\sum_{i=1}^n (y^{(i)}-h(x)x_k) \\
+    &= \frac{1}{n} \sum_{i=1}^n (h(x)-y^{(i)})x_k = \frac{1}{n} \sum_{i=1}^n \left( \frac{1}{1+\exp(-\theta^Tx^{(i)})} -y^{(i)} \right) x_k
+    % ### END CODE HERE ###
+  \end{flalign*}
+  
+  Consequently, the $(k, l)$ entry of the Hessian is given by
+  
+  \begin{flalign*}
+    H_{kl} = \frac{\partial^2 J(\theta)}{\partial\theta_k\partial\theta_l} &=
+    % ### START CODE HERE ###
+    \frac{\partial}{\partial\theta_k} \left( \frac{\partial}{\partial\theta_l} \right) = \frac{\partial}{\partial\theta_k} \left( \frac{1}{n} \sum_{i=1}^n (h(x)-y^{(i)})x_l \right) = \frac{1}{n} \sum_{i=1}^n \frac{\partial}{\partial\theta_k} h(x)x_l \\
+    &= \frac{1}{n} \sum_{i=1}^n h(x)(1-h(x))x_kx_l = \frac{1}{n} \sum_{i=1}^n \frac{\exp(-\theta^Tx^{(i)})}{(1+\exp(-\theta^Tx^{(i)}))^2}x_kx_l
+    % ### END CODE HERE ###
+  \end{flalign*}
+  
+  Using the fact that $X_{ij} = x_i x_j$ if and only if $X = xx^T$, we have
+  
+  \begin{flalign*}
+    H &=
+    % ### START CODE HERE ###
+    \frac{1}{n} \sum_{i=1}^n h(x)(1-h(x))xx^T = \frac{1}{n} \sum_{i=1}^n \frac{\exp(-\theta^Tx^{(i)})}{(1+\exp(-\theta^Tx^{(i)}))^2}xx^T
+    % ### END CODE HERE ###
+  \end{flalign*}
+
+  To prove that $H$ is positive semi-definite, show $z^T Hz \ge 0$ for all $z\in\Re^\di$.
+  
+  \begin{flalign*}
+    % ### START CODE HERE ###
+    \sum_i \sum_j z_ix_ix_jz_j &= \sum_i z_ix_i \left( \sum_j x_jz_j \right) = (x^Tz)(x^Tz) = (x^Tz)^2 \ge 0 \text{ since we square } (x^Tz) \\ 
+    z^T H z &=
+    z^T (\frac{1}{n} \sum_{i=1}^n h(x)(1-h(x))xx^T)z = \sum_{i=1}^n \sum_{j=1}^n H_{ij}z_iz_j = \sum_{i=1}^n \sum_{j=1}^n \left( \frac{1}{n} \sum_{k=1}^n h(x)(1-h(x))x_ix_j \right)z_iz_j \\
+    &=  \frac{1}{n} \sum_{k=1}^n h(x)(1-h(x)) \left( \sum_{i=1}^n \sum_{j=1}^n x_iz_ix_jz_j \right) = \frac{1}{n} \sum_{k=1}^n h(x)(1-h(x))(x^Tz)^2
+    % ### END CODE HERE ###
+  \end{flalign*}
+
+  Since $h(x)$ is a sigmoid function of form $\frac{1}{1+e^{-\theta^Tx^{(i)}}}$, it is always confined to $0 \le h(x) \le 1$. Therefore, $h(x) \ge 0$ and $(1-h(x)) \ge 0$. $n$ also represents the cardinality of the set of training examples, so $n > 0$. We already concluded that $(x^Tz)^2 \ge 0$. All components of $z^THz$ are $\ge 0$. Therefore, we can conclude that $z^THz \ge 0$.
+  
+\end{answer}
+% <SCPD_SUBMISSION_TAG>_1a
+\clearpage
+
+\LARGE
+1.c
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_1c
+\begin{answer}
+  For shorthand, we let $\mc{H} = \{\phi, \Sigma, \mu_{0}, \mu_1\}$ denote
+  the parameters for the problem.
+  Since the given formulae are conditioned on $y$, use Bayes rule to get:
+  \begin{align*}
+    p(y =1\vert  x ; \mc{H}) &= \frac {p(x\vert y=1; \mc{H}) p(y=1; \mc{H})} {p(x; \mc{H})}\\
+    & = \frac {p(x\vert y=1; \mc{H}) p(y=1; \mc{H})}
+      {p(x\vert y=1; \mc{H}) p(y=1; \mc{H}) + p(x\vert y={0}; \mc{H}) p(y={0};
+      \mc{H})}\\
+    &=\\
+    % ### START CODE HERE ###
+    % ### END CODE HERE ###
+  \end{align*}
+\end{answer}
+% <SCPD_SUBMISSION_TAG>_1c
+\clearpage
+
+\LARGE
+1.d
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_1d
+\begin{answer}
+  First, derive the expression for the log-likelihood of the training data:
+  \begin{flalign*}
+    \ell(\phi, \mu_{0}, \mu_1, \Sigma) &= \log \prod_{i=1}^\nexp p(x^{(i)} \vert  y^{(i)}; \mu_{0}, \mu_1, \Sigma) p(y^{(i)}; \phi)\\
+    &= \sum_{i=1}^{\nexp} \log p(x^{(i)} \vert  y^{(i)}; \mu_{0}, \mu_1, \Sigma) +
+    \sum_{i=1}^{n} \log p(y^{(i)}; \phi)\\
+    &=\\
+    % ### START CODE HERE ###
+    % ### END CODE HERE ###
+  \end{flalign*}
+
+  Now, the likelihood is maximized by setting the derivative (or gradient) with respect to each of the parameters to zero.\\
+
+  \textbf{For $\mathbf{\phi}$:}
+
+  \begin{flalign*}
+    \frac{\partial \ell}{\partial \phi}&=\\
+    % ### START CODE HERE ###
+    % ### END CODE HERE ###
+  \end{flalign*}
+
+  Setting this equal to zero and solving for $\phi$ gives the maximum
+  likelihood estimate.\\
+
+  \textbf{For $\mathbf{\mu_0}$:}
+
+  {\bf Hint:}  Remember that $\Sigma$ (and thus $\Sigma^{-1}$) is symmetric.
+
+  \begin{flalign*}
+    \nabla_{\mu_{0}}\ell &=\\
+    % ### START CODE HERE ###
+    % ### END CODE HERE ###
+  \end{flalign*}
+
+  Setting this gradient to zero gives the maximum likelihood estimate
+  for $\mu_{0}$.\\
+
+  \textbf{For $\mathbf{\mu_1}$:}
+
+  {\bf Hint:}  Remember that $\Sigma$ (and thus $\Sigma^{-1}$) is symmetric.
+
+  \begin{flalign*}
+    \nabla_{\mu_{1}}\ell &=\\
+    % ### START CODE HERE ###
+    % ### END CODE HERE ###
+  \end{flalign*}
+
+  Setting this gradient to zero gives the maximum likelihood estimate
+  for $\mu_{1}$.\\
+
+  For $\Sigma$, we find the gradient with respect to $S = \Sigma^{-1}$ rather than $\Sigma$ just to simplify the derivation (note that $\vert S\vert  = \frac{1}{\vert \Sigma\vert }$).
+  You should convince yourself that the maximum likelihood estimate $S_\nexp$ found in this way would correspond to the actual maximum likelihood estimate $\Sigma_\nexp$ as $S_\nexp^{-1} = \Sigma_\nexp$.
+
+  {\bf Hint:}  You may need the following identities: 
+  \begin{equation*}
+    \nabla_S \vert S\vert  = \vert S\vert  (S^{-1})^T
+  \end{equation*}
+  \begin{equation*}
+    \nabla_S b_i^T S b_i = \nabla_S tr \left( b_i^T S b_i \right) =
+    \nabla_S tr \left( S b_i b_i^T \right) = b_i b_i^T
+  \end{equation*}
+
+  \begin{flalign*}
+    \nabla_S\ell &=\\
+    % ### START CODE HERE ###
+  % ### END CODE HERE ###
+  \end{flalign*}
+
+  Next, substitute $\Sigma = S^{-1}$.  Setting this gradient to zero gives the required maximum likelihood estimate for $\Sigma$.\\
+\end{answer}
+% <SCPD_SUBMISSION_TAG>_1d
+\clearpage
+
+\LARGE
+1.f
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_1f
+\begin{answer}
+  % ### START CODE HERE ###
+  % ### END CODE HERE ###
+\end{answer}
+% <SCPD_SUBMISSION_TAG>_1f
+\clearpage
+
+\LARGE
+1.g
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_1g
+\begin{answer}
+  % ### START CODE HERE ###
+  % ### END CODE HERE ###
+\end{answer}
+% <SCPD_SUBMISSION_TAG>_1g
+\clearpage
+
+\LARGE
+1.h
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_1h
+\begin{answer}
+  % ### START CODE HERE ###
+  % ### END CODE HERE ###
+\end{answer}
+% <SCPD_SUBMISSION_TAG>_1h
+\clearpage
+
+\LARGE
+2.c
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_2c
+\begin{answer}
+  % ### START CODE HERE ###
+  % ### END CODE HERE ###
+\end{answer}
+% <SCPD_SUBMISSION_TAG>_2c
+\clearpage
+
+\LARGE
+2.d
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_2d
+\begin{answer}
+  % ### START CODE HERE ###
+  % ### END CODE HERE ###
+\end{answer}
+% <SCPD_SUBMISSION_TAG>_2d
+\clearpage
+
+\LARGE
+2.e
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_2e
+\begin{answer}
+  % ### START CODE HERE ###
+  % ### END CODE HERE ###
+\end{answer}
+% <SCPD_SUBMISSION_TAG>_2e
+\clearpage
+
+\LARGE
+3.ai
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_3ai
+\begin{answer}
+  % ### START CODE HERE ###
+  % ### END CODE HERE ###
+\end{answer}
+% <SCPD_SUBMISSION_TAG>_3ai
+
+\LARGE
+3.aii
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_3aii
+\begin{answer}
+  % ### START CODE HERE ###
+  % ### END CODE HERE ###
+\end{answer}
+% <SCPD_SUBMISSION_TAG>_3aii
+
+\LARGE
+3.aiii
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_3aiii
+\begin{answer}
+  % ### START CODE HERE ###
+  % ### END CODE HERE ###
+\end{answer}
+% <SCPD_SUBMISSION_TAG>_3aiii
+
+\LARGE
+3.c
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_3c
+\begin{answer}
+  % ### START CODE HERE ###
+  % ### END CODE HERE ###
+\end{answer}
+% <SCPD_SUBMISSION_TAG>_3c
+
+% <SCPD_SUBMISSION_TAG>_entire_submission
+
+\end{document}
