@@ -43,18 +43,18 @@ class LogisticRegression:
         else:
             theta_up = self.theta.reshape((dim,1))
 
-        for iteration in range(4):
+        for iteration in range(self.max_iter):
 
-            h_theta = 1/(1+np.exp(x @ theta_up))
+            h_theta = 1/(1+np.exp(-x @ theta_up))
             r = (h_theta * (1 - h_theta)).flatten()
             R = np.diag(r)
             Hessian = (1/n)*x.T @ R @ x # conversion into vectorized caluclations requires diagonal matrix as the variances
-            Gradient = (1/n)*x.T @ (y.reshape(-1,1) - h_theta)
+            Gradient = (1/n)*x.T @ (h_theta - y.reshape(-1,1))
             Hessian_Inverse_Times_Gradient = np.linalg.solve(Hessian,Gradient)
             theta_new= theta_up - Hessian_Inverse_Times_Gradient
 
             # pp.pprint(np.linalg.norm(theta_up - theta_new))
-            if np.linalg.norm(theta_up - theta_new) < 1e-5:
+            if np.linalg.norm(theta_up - theta_new) < self.eps:
                 break
 
             theta_up = theta_new
@@ -79,6 +79,6 @@ class LogisticRegression:
         # *** START CODE HERE ***
 
         probability = 1 / (1 + np.exp(-x @ self.theta))
-        return (probability >= 0.5).astype(int)
+        return (probability >= 0.5).astype(int).flatten()
 
         # *** END CODE HERE ***
