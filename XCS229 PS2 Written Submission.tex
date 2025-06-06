@@ -1,0 +1,670 @@
+% This contents of this file will be inserted into the _Solutions version of the
+% output tex document.  Here's an example:
+
+% If assignment with subquestion (1.a) requires a written response, you will
+% find the following flag within this document: <SCPD_SUBMISSION_TAG>_1a
+% In this example, you would insert the LaTeX for your solution to (1.a) between
+% the <SCPD_SUBMISSION_TAG>_1a flags.  If you also constrain your answer between the
+% START_CODE_HERE and END_CODE_HERE flags, your LaTeX will be styled as a
+% solution within the final document.
+
+% Please do not use the '<SCPD_SUBMISSION_TAG>' character anywhere within your code.  As expected,
+% that will confuse the regular expressions we use to identify your solution.
+\def\assignmentnum{2 }
+\def\assignmenttitle{XCS229 Problem Set \assignmentnum}
+\documentclass{article}
+\usepackage[top = 1.0in]{geometry}
+
+\usepackage{graphicx}
+
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{bm}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{framed}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\newcommand{\di}{{d}}
+\newcommand{\nexp}{{n}}
+\newcommand{\nf}{{p}}
+\newcommand{\vcd}{{\textbf{D}}}
+\newcommand{\Int}{\mathbb{Z}}
+\newcommand\bb{\ensuremath{\mathbf{b}}}
+\newcommand\bs{\ensuremath{\mathbf{s}}}
+\newcommand\bp{\ensuremath{\mathbf{p}}}
+\newcommand{\relu} { \operatorname{ReLU} }
+\newcommand{\smx} { \operatorname{softmax} }
+\newcommand\bx{\ensuremath{\mathbf{x}}}
+\newcommand\bh{\ensuremath{\mathbf{h}}}
+\newcommand\bc{\ensuremath{\mathbf{c}}}
+\newcommand\bW{\ensuremath{\mathbf{W}}}
+\newcommand\by{\ensuremath{\mathbf{y}}}
+\newcommand\bo{\ensuremath{\mathbf{o}}}
+\newcommand\be{\ensuremath{\mathbf{e}}}
+\newcommand\ba{\ensuremath{\mathbf{a}}}
+\newcommand\bu{\ensuremath{\mathbf{u}}}
+\newcommand\bv{\ensuremath{\mathbf{v}}}
+\newcommand\bP{\ensuremath{\mathbf{P}}}
+\newcommand\bg{\ensuremath{\mathbf{g}}}
+\newcommand\bX{\ensuremath{\mathbf{X}}}
+% real numbers R symbol
+\newcommand{\Real}{\mathbb{R}}
+
+% encoder hidden
+\newcommand{\henc}{\bh^{\text{enc}}}
+\newcommand{\hencfw}[1]{\overrightarrow{\henc_{#1}}}
+\newcommand{\hencbw}[1]{\overleftarrow{\henc_{#1}}}
+
+% encoder cell
+\newcommand{\cenc}{\bc^{\text{enc}}}
+\newcommand{\cencfw}[1]{\overrightarrow{\cenc_{#1}}}
+\newcommand{\cencbw}[1]{\overleftarrow{\cenc_{#1}}}
+
+% decoder hidden
+\newcommand{\hdec}{\bh^{\text{dec}}}
+
+% decoder cell
+\newcommand{\cdec}{\bc^{\text{dec}}}
+
+\usepackage[hyperfootnotes=false]{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor = blue,
+  urlcolor  = blue,
+  citecolor = blue,
+  anchorcolor = blue,
+  pdfborderstyle={/S/U/W 1}
+}
+\usepackage{nccmath}
+\usepackage{mathtools}
+\usepackage{graphicx,caption}
+\usepackage[shortlabels]{enumitem}
+\usepackage{epstopdf,subcaption}
+\usepackage{psfrag}
+\usepackage{amsmath,amssymb,epsf}
+\usepackage{verbatim}
+\usepackage{cancel}
+\usepackage{color,soul}
+\usepackage{bbm}
+\usepackage{listings}
+\usepackage{setspace}
+\usepackage{float}
+\definecolor{Code}{rgb}{0,0,0}
+\definecolor{Decorators}{rgb}{0.5,0.5,0.5}
+\definecolor{Numbers}{rgb}{0.5,0,0}
+\definecolor{MatchingBrackets}{rgb}{0.25,0.5,0.5}
+\definecolor{Keywords}{rgb}{0,0,1}
+\definecolor{self}{rgb}{0,0,0}
+\definecolor{Strings}{rgb}{0,0.63,0}
+\definecolor{Comments}{rgb}{0,0.63,1}
+\definecolor{Backquotes}{rgb}{0,0,0}
+\definecolor{Classname}{rgb}{0,0,0}
+\definecolor{FunctionName}{rgb}{0,0,0}
+\definecolor{Operators}{rgb}{0,0,0}
+\definecolor{Background}{rgb}{0.98,0.98,0.98}
+\lstdefinelanguage{Python}{
+    numbers=left,
+    numberstyle=\footnotesize,
+    numbersep=1em,
+    xleftmargin=1em,
+    framextopmargin=2em,
+    framexbottommargin=2em,
+    showspaces=false,
+    showtabs=false,
+    showstringspaces=false,
+    frame=l,
+    tabsize=4,
+    % Basic
+    basicstyle=\ttfamily\footnotesize\setstretch{1},
+    backgroundcolor=\color{Background},
+    % Comments
+    commentstyle=\color{Comments}\slshape,
+    % Strings
+    stringstyle=\color{Strings},
+    morecomment=[s][\color{Strings}]{"""}{"""},
+    morecomment=[s][\color{Strings}]{'''}{'''},
+    % keywords
+    morekeywords={import,from,class,def,for,while,if,is,in,elif,else,not,and,or
+    ,print,break,continue,return,True,False,None,access,as,,del,except,exec
+    ,finally,global,import,lambda,pass,print,raise,try,assert},
+    keywordstyle={\color{Keywords}\bfseries},
+    % additional keywords
+    morekeywords={[2]@invariant},
+    keywordstyle={[2]\color{Decorators}\slshape},
+    emph={self},
+    emphstyle={\color{self}\slshape},
+%
+}
+\lstMakeShortInline|
+
+\pagestyle{empty} \addtolength{\textwidth}{1.0in}
+\addtolength{\textheight}{0.5in}
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\newcommand{\ruleskip}{\bigskip\hrule\bigskip}
+\newcommand{\nodify}[1]{{\sc #1}}
+\newenvironment{answer}{\sf \begingroup\color{ForestGreen}}{\endgroup}%
+
+\setlist[itemize]{itemsep=2pt, topsep=0pt}
+\setlist[enumerate]{itemsep=6pt, topsep=0pt}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\setlist[enumerate]{parsep=4pt}
+\setlength{\unitlength}{1cm}
+
+\renewcommand{\Re}{{\mathbb R}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\what}[1]{\widehat{#1}}
+
+\renewcommand{\comment}[1]{}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\half}{\frac{1}{2}}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\def\KL{D_{KL}}
+\def\xsi{x^{(i)}}
+\def\ysi{y^{(i)}}
+\def\zsi{z^{(i)}}
+\def\E{\mathbb{E}}
+\def\calN{\mathcal{N}}
+\def\calD{\mathcal{D}}
+\def\slack{\url{http://xcs229-scpd.slack.com/}}
+\def\zipscriptalt{\texttt{python zip\_submission.py}}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
+ 
+\usepackage{bbding}
+\usepackage{pifont}
+\usepackage{wasysym}
+\usepackage{amssymb}
+\usepackage{framed}
+\usepackage{scrextend}
+
+\newcommand{\alns}[1] {
+	\begin{align*} #1 \end{align*}
+}
+
+\newcommand{\pd}[2] {
+ \frac{\partial #1}{\partial #2}
+}
+\renewcommand{\Re} { \mathbb{R} }
+\newcommand{\btx} { \mathbf{\tilde{x}} }
+\newcommand{\bth} { \mathbf{\tilde{h}} }
+\newcommand{\sigmoid} { \operatorname{\sigma} }
+\newcommand{\CE} { \operatorname{CE} }
+\newcommand{\byt} { \hat{\by} }
+\newcommand{\yt} { \hat{y} }
+
+\newcommand{\oft}[1]{^{(#1)}}
+\newcommand{\fone}{\ensuremath{F_1}}
+
+\newcommand{\ac}[1]{ {\color{red} \textbf{AC:} #1} }
+\newcommand{\ner}[1]{\textbf{\color{blue} #1}}
+\begin{document}
+\pagestyle{myheadings} \markboth{}{\assignmenttitle}
+
+% <SCPD_SUBMISSION_TAG>_entire_submission
+
+\ruleskip
+
+\LARGE
+1.a
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_1a
+\begin{answer}
+  Since $g'(z) = g(z)(1-g(z))$ and $h(x) = g(\theta^T x)$, it follows that $\partial h(x) / \partial \theta_k = h(x)(1 - h(x)) x_k$.
+
+  Letting $h_{\theta}(x^{(i)}) = g(\theta^T x^{(i)})
+  = 1/(1 + \exp(-\theta^T x^{(i)}))$, we have\\
+
+  \begin{flalign*}
+    \frac{\partial\log h_{\theta}(x^{(i)})}{\partial\theta_k} &=
+    % ### START CODE HERE ###
+    \frac{1}{h_\theta(x^{(i)})} \frac{\partial h(x)}{\partial \theta_k} = \frac{h(x)(1-h(x))x_k}{h(x)} = (1-h(x))x_k = \frac{x_k \exp(-\theta^T x^{(i)})}{(1 + \exp(-\theta^T x^{(i)}))} \\
+    % ### END CODE HERE ###
+    \frac{\partial\log(1 - h_{\theta}(x^{(i)}))}{\partial\theta_k} &= 
+    % ### START CODE HERE ###
+    \frac{1}{1-h_\theta(x^{(i)})} -\frac{\partial h(x)}{\partial \theta_k} = \frac{h(x)(1-h(x))x_k}{h(x)-1} = -h(x)x_k = \frac{-x_k}{(1 + \exp(-\theta^T x^{(i)}))} \\
+    % ### END CODE HERE ###
+  \end{flalign*}
+
+  Substituting into our equation for $J(\theta)$, we have
+  %
+  \begin{flalign*}
+    \frac{\partial J(\theta)}{\partial\theta_k} &=
+    % ### START CODE HERE ###
+    -\frac{1}{n}\sum_{i=1}^n (y^{(i)} (1-h(x))x_k+ (1-y^{(i)})(-h(x)x_k)) = -\frac{1}{n}\sum_{i=1}^n (y^{(i)}-h(x)x_k) \\
+    &= \frac{1}{n} \sum_{i=1}^n (h(x)-y^{(i)})x_k = \frac{1}{n} \sum_{i=1}^n \left( \frac{1}{1+\exp(-\theta^Tx^{(i)})} -y^{(i)} \right) x_k
+    % ### END CODE HERE ###
+  \end{flalign*}
+  
+  Consequently, the $(k, l)$ entry of the Hessian is given by
+  
+  \begin{flalign*}
+    H_{kl} = \frac{\partial^2 J(\theta)}{\partial\theta_k\partial\theta_l} &=
+    % ### START CODE HERE ###
+    \frac{\partial}{\partial\theta_k} \left( \frac{\partial}{\partial\theta_l} \right) = \frac{\partial}{\partial\theta_k} \left( \frac{1}{n} \sum_{i=1}^n (h(x)-y^{(i)})x_l \right) = \frac{1}{n} \sum_{i=1}^n \frac{\partial}{\partial\theta_k} h(x)x_l \\
+    &= \frac{1}{n} \sum_{i=1}^n h(x)(1-h(x))x_kx_l = \frac{1}{n} \sum_{i=1}^n \frac{\exp(-\theta^Tx^{(i)})}{(1+\exp(-\theta^Tx^{(i)}))^2}x_kx_l
+    % ### END CODE HERE ###
+  \end{flalign*}
+  
+  Using the fact that $X_{ij} = x_i x_j$ if and only if $X = xx^T$, we have
+  
+  \begin{flalign*}
+    H &=
+    % ### START CODE HERE ###
+    \frac{1}{n} \sum_{i=1}^n h(x)(1-h(x))xx^T = \frac{1}{n} \sum_{i=1}^n \frac{\exp(-\theta^Tx^{(i)})}{(1+\exp(-\theta^Tx^{(i)}))^2}xx^T
+    % ### END CODE HERE ###
+  \end{flalign*}
+
+  To prove that $H$ is positive semi-definite, show $z^T Hz \ge 0$ for all $z\in\Re^\di$.
+  
+  \begin{flalign*}
+    % ### START CODE HERE ###
+    \sum_i \sum_j z_ix_ix_jz_j &= \sum_i z_ix_i \left( \sum_j x_jz_j \right) = (x^Tz)(x^Tz) = (x^Tz)^2 \ge 0 \text{ since we square } (x^Tz) \\ 
+    z^T H z &=
+    z^T (\frac{1}{n} \sum_{i=1}^n h(x)(1-h(x))xx^T)z = \sum_{i=1}^n \sum_{j=1}^n H_{ij}z_iz_j = \sum_{i=1}^n \sum_{j=1}^n \left( \frac{1}{n} \sum_{k=1}^n h(x)(1-h(x))x_ix_j \right)z_iz_j \\
+    &=  \frac{1}{n} \sum_{k=1}^n h(x)(1-h(x)) \left( \sum_{i=1}^n \sum_{j=1}^n x_iz_ix_jz_j \right) = \frac{1}{n} \sum_{k=1}^n h(x)(1-h(x))(x^Tz)^2
+    % ### END CODE HERE ###
+  \end{flalign*}
+
+  Since $h(x)$ is a sigmoid function of form $\frac{1}{1+e^{-\theta^Tx^{(i)}}}$, it is always confined to $0 \le h(x) \le 1$. Therefore, $h(x) \ge 0$ and $(1-h(x)) \ge 0$. $n$ also represents the cardinality of the set of training examples, so $n > 0$. We already concluded that $(x^Tz)^2 \ge 0$. All components of $z^THz$ are $\ge 0$. Therefore, we can conclude that $z^THz \ge 0$.
+  
+\end{answer}
+% <SCPD_SUBMISSION_TAG>_1a
+\clearpage
+
+\LARGE
+1.c
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_1c
+\begin{answer}
+  For shorthand, we let $\mc{H} = \{\phi, \Sigma, \mu_{0}, \mu_1\}$ denote
+  the parameters for the problem.
+  Since the given formulae are conditioned on $y$, use Bayes rule to get:
+  \begin{align*}
+    p(y =1\vert  x ; \mc{H}) &= \frac {p(x\vert y=1; \mc{H}) p(y=1; \mc{H})} {p(x; \mc{H})}\\
+    & = \frac {p(x\vert y=1; \mc{H}) p(y=1; \mc{H})}
+      {p(x\vert y=1; \mc{H}) p(y=1; \mc{H}) + p(x\vert y={0}; \mc{H}) p(y={0};
+      \mc{H})}\\
+    &=
+    % ### START CODE HERE ###
+    \frac{p(x \mid y=1; \mc{H}) \phi}{p(x \mid y=1; \mc{H}) \phi + p(x \mid y=0; \mc{H})(1- \phi)} \\
+    &= \frac{\frac{1}{(2\pi)^{d/2} \vert \Sigma \vert ^{1/2}}\exp\left(-\frac{1}{2}(x-\mu_1)^T \Sigma^{-1}(x-\mu_1)\right) \phi}{ \frac{1}{(2\pi)^{d/2} \vert \Sigma \vert^{1/2}}\exp\left(-\frac{1}{2}(x-\mu_1)^T \Sigma^{-1}(x-\mu_1)\right) \phi +  \frac{1}{(2\pi)^{d/2} \vert \Sigma \vert ^{1/2}}\exp\left(-\frac{1}{2}(x-\mu_0)^T \Sigma^{-1}(x-\mu_0)\right) (1-\phi)} \\
+    &= \frac{\exp\left(-\frac{1}{2}(x-\mu_1)^T \Sigma^{-1}(x-\mu_1)\right) \phi}{\exp\left(-\frac{1}{2}(x-\mu_1)^T \Sigma^{-1}(x-\mu_1)\right) \phi +  \exp\left(-\frac{1}{2}(x-\mu_0)^T \Sigma^{-1}(x-\mu_0)\right) (1-\phi)} \\
+    &= \frac{\phi}{e^{\frac{1}{2}(x-\mu_1)^T \Sigma^{-1}(x-\mu_1)}} \frac{1}{\frac{\phi}{e^{\frac{1}{2}(x-\mu_1)^T \Sigma^{-1}(x-\mu_1)}} + \frac{1-\phi}{e^{\frac{1}{2}(x-\mu_0)^T \Sigma^{-1}(x-\mu_0)}}} \\
+    &= \frac{\phi}{\phi + \frac{\left( e^{\frac{1}{2}(x-\mu_1)^T \Sigma^{-1}(x-\mu_1)} \right)(1-\phi)}{e^{\frac{1}{2}(x-\mu_0)^T \Sigma^{-1}(x-\mu_0)}}} \\
+    &= \frac{1}{1 + \frac{\left( e^{\frac{1}{2}(x-\mu_1)^T \Sigma^{-1}(x-\mu_1)} \right)(1-\phi)}{e^{\frac{1}{2}(x-\mu_0)^T \Sigma^{-1}(x-\mu_0)} \phi}} \\
+    &= \frac{1}{1 + \left( e^{\frac{1}{2}(x-\mu_1)^T \Sigma^{-1}(x-\mu_1) - \frac{1}{2}(x-\mu_0)^T \Sigma^{-1}(x-\mu_0)} \right)\frac{1-\phi}{\phi}} \\
+    &= \frac{1}{1 + e^{\frac{1}{2}(x-\mu_1)^T \Sigma^{-1}(x-\mu_1) - \frac{1}{2}(x-\mu_0)^T \Sigma^{-1}(x-\mu_0) + \log\left(\frac{1-\phi}{\phi}\right)}} \\
+    &= \frac{1}{1 + e^{\frac{1}{2}(x^T\Sigma^{-1}x-x^T\Sigma^{-1}\mu_1-\mu_1^T\Sigma^{-1}x+\mu_1^T\Sigma^{-1}\mu_1) - \frac{1}{2}(x^T\Sigma^{-1}x-x^T\Sigma^{-1}\mu_0-\mu_0^T\Sigma^{-1}x+\mu_0^T\Sigma^{-1}\mu_0) + \log\left(\frac{1-\phi}{\phi}\right)}} \\ 
+    &\text{ Since the covariance matrix and the inverse of the covariance matrix are both symmetric, } x^T\Sigma^{-1}\mu = \mu^T\Sigma^{-1}x \\
+    &= \frac{1}{1 + e^{\frac{1}{2}x^T\Sigma^{-1}x-x^T\Sigma^{-1}\mu_1+\frac{1}{2}\mu_1^T\Sigma^{-1}\mu_1 - \frac{1}{2}x^T\Sigma^{-1}x + x^T\Sigma^{-1}\mu_0-\frac{1}{2}\mu_0^T\Sigma^{-1}\mu_0 + \log\left(\frac{1-\phi}{\phi}\right)}} \\ 
+    &= \frac{1}{1 + e^{-x^T\Sigma^{-1}\mu_1+\frac{1}{2}\mu_1^T\Sigma^{-1}\mu_1 + x^T\Sigma^{-1}\mu_0-\frac{1}{2}\mu_0^T\Sigma^{-1}\mu_0 + \log\left(\frac{1-\phi}{\phi}\right)}} \\ 
+    &= \frac{1}{1 + e^{x^T\Sigma^{-1}(\mu_0-\mu_1)+\frac{1}{2}(\mu_1^T\Sigma^{-1}\mu_1 -\mu_0^T\Sigma^{-1}\mu_0) + \log\left(\frac{1-\phi}{\phi}\right)}} \\ 
+    &= \frac{1}{1+ e^{-(\theta^Tx+\theta_0)}} \text{ where } \theta = \Sigma^{-1}(\mu_1-\mu_0) \text{ and } \theta_0 = \frac{1}{2}(\mu_0^T\Sigma^{-1}\mu_0 -\mu_1^T\Sigma^{-1}\mu_1) - \log\left(\frac{1-\phi}{\phi}\right)
+    % ### END CODE HERE ###
+  \end{align*}
+\end{answer}
+% <SCPD_SUBMISSION_TAG>_1c
+\clearpage
+
+\LARGE
+1.d
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_1d
+\begin{answer}
+  First, derive the expression for the log-likelihood of the training data:
+  \begin{flalign*}
+    \ell(\phi, \mu_{0}, \mu_1, \Sigma) &= \log \prod_{i=1}^\nexp p(x^{(i)} \vert  y^{(i)}; \mu_{0}, \mu_1, \Sigma) p(y^{(i)}; \phi)\\
+    &= \sum_{i=1}^{\nexp} \log p(x^{(i)} \vert  y^{(i)}; \mu_{0}, \mu_1, \Sigma) +
+    \sum_{i=1}^{n} \log p(y^{(i)}; \phi)\\
+    &=
+    % ### START CODE HERE ###
+    \sum_{i=1}^n \log \left( \frac{1}{(2\pi)^{d/2} \vert \Sigma \vert^{1/2}} e^{-\frac{1}{2}(x^{(i)}-\mu_{y^{(i)}})^T \Sigma^{-1} (x^{(i)}-\mu_{y^{(i)}}) }\right) + \sum_{i=1}^n \log \left( \phi^{y^{(i)}}(1 - \phi)^{(1-y^{(i)})} \right)
+    % ### END CODE HERE ###
+  \end{flalign*}
+
+  Now, the likelihood is maximized by setting the derivative (or gradient) with respect to each of the parameters to zero.\\
+
+  \textbf{For $\mathbf{\phi}$:}
+
+  \begin{flalign*}
+    \frac{\partial \ell}{\partial \phi}&=
+    % ### START CODE HERE ###
+    \sum_{i=1}^n \left[ \frac{y^{(i)}}{\phi} - \frac{1-y^{(i)}}{(1-\phi)} \right]
+    % ### END CODE HERE ###
+  \end{flalign*}
+
+  Setting this equal to zero and solving for $\phi$ gives the maximum
+  likelihood estimate.\\
+
+  \textbf{For $\mathbf{\mu_0}$:}
+
+  {\bf Hint:}  Remember that $\Sigma$ (and thus $\Sigma^{-1}$) is symmetric.
+
+  \begin{flalign*}
+    \nabla_{\mu_{0}}\ell &=
+    % ### START CODE HERE ###
+    \sum_{i \text{ for } y^{(i)}=0} \nabla_{\mu_{1}} \left[ -\frac{1}{2}(x^{(i)}-\mu_{y^{(i)}})^T \Sigma^{-1} (x^{(i)}- \mu_{y^{(i)}}) \right] \\
+    &= \sum_{i \text{ for } y^{(i)}=0} \Sigma^{-1} (x^{(i)} - \mu_0)
+    % ### END CODE HERE ###
+  \end{flalign*}
+
+  Setting this gradient to zero gives the maximum likelihood estimate
+  for $\mu_{0}$.\\
+
+  \textbf{For $\mathbf{\mu_1}$:}
+
+  {\bf Hint:}  Remember that $\Sigma$ (and thus $\Sigma^{-1}$) is symmetric.
+
+  \begin{flalign*}
+    \nabla_{\mu_{1}}\ell &=
+    % ### START CODE HERE ###
+    \sum_{i \text{ for } y^{(i)}=1} \nabla_{\mu_{1}} \left[ -\frac{1}{2}(x^{(i)}-\mu_{y^{(i)}})^T \Sigma^{-1} (x^{(i)}- \mu_{y^{(i)}}) \right] \\
+    &= \sum_{i \text{ for } y^{(i)}=1} \Sigma^{-1} (x^{(i)} - \mu_1)
+    % ### END CODE HERE ###
+  \end{flalign*}
+
+  Setting this gradient to zero gives the maximum likelihood estimate
+  for $\mu_{1}$.\\
+
+  For $\Sigma$, we find the gradient with respect to $S = \Sigma^{-1}$ rather than $\Sigma$ just to simplify the derivation (note that $\vert S\vert  = \frac{1}{\vert \Sigma\vert }$).
+  You should convince yourself that the maximum likelihood estimate $S_\nexp$ found in this way would correspond to the actual maximum likelihood estimate $\Sigma_\nexp$ as $S_\nexp^{-1} = \Sigma_\nexp$.
+
+  {\bf Hint:}  You may need the following identities: 
+  \begin{equation*}
+    \nabla_S \vert S\vert  = \vert S\vert  (S^{-1})^T
+  \end{equation*}
+  \begin{equation*}
+    \nabla_S b_i^T S b_i = \nabla_S tr \left( b_i^T S b_i \right) =
+    \nabla_S tr \left( S b_i b_i^T \right) = b_i b_i^T
+  \end{equation*}
+
+  \begin{flalign*}
+    \nabla_S\ell
+    % ### START CODE HERE ###
+    &= \nabla_S \sum_{i=1}^n \log \left( \frac{1}{(2\pi)^{d/2} \vert S^{-1} \vert^{1/2}} e^{-\frac{1}{2}(x^{(i)}-\mu_{y^{(i)}})^T S (x^{(i)}-\mu_{y^{(i)}}) }\right) + \sum_{i=1}^n \log \left( \phi^{y^{(i)}}(1 - \phi)^{(1-y^{(i)})} \right) \\
+    &= \nabla_S \sum_{i=1}^n \log \left( \frac{1}{(2\pi)^{d/2} \vert S^{-1} \vert^{1/2}} e^{-\frac{1}{2}(x^{(i)}-\mu_{y^{(i)}})^T S (x^{(i)}-\mu_{y^{(i)}}) }\right) \\
+    &= \nabla_S \sum_{i=1}^n \log \left( \frac{1}{(2\pi)^{d/2} \vert S^{-1} \vert^{1/2}} \right) + \log \left( e^{-\frac{1}{2}(x^{(i)}-\mu_{y^{(i)}})^T S (x^{(i)}-\mu_{y^{(i)}}) }\right) \\
+    &= \nabla_S \sum_{i=1}^n -\log \left( (2\pi)^{d/2} \vert S^{-1} \vert^{1/2} \right) + -\frac{1}{2}(x^{(i)}-\mu_{y^{(i)}})^T S (x^{(i)}-\mu_{y^{(i)}}) \\
+    &= \nabla_S \sum_{i=1}^n - \frac{d}{2} \log ((2\pi)) - \frac{1}{2} \log (\vert S^{-1} \vert) + -\frac{1}{2}(x^{(i)}-\mu_{y^{(i)}})^T S (x^{(i)}-\mu_{y^{(i)}}) \\
+    &= \nabla_S \sum_{i=1}^n \frac{1}{2} \log (\vert S \vert) + -\frac{1}{2}(x^{(i)}-\mu_{y^{(i)}})^T S (x^{(i)}-\mu_{y^{(i)}}) \\
+    &= \sum_{i=1}^n \frac{1}{2} (S^{-1})^T + -\frac{1}{2} (x^{(i)}-\mu_{y^{(i)}})(x^{(i)}-\mu_{y^{(i)}})^T \\
+    &= \frac{1}{2} \sum_{i=1}^n (S^{-1})^T - (x^{(i)}-\mu_{y^{(i)}})(x^{(i)}-\mu_{y^{(i)}})^T \\
+    &=\frac{1}{2} \sum_{i=1}^n \Sigma^T - (x^{(i)}-\mu_{y^{(i)}})(x^{(i)}-\mu_{y^{(i)}})^T
+    % ### END CODE HERE ###
+  \end{flalign*}
+
+  Next, substitute $\Sigma = S^{-1}$.  Setting this gradient to zero gives the required maximum likelihood estimate for $\Sigma$.\\
+\end{answer}
+% <SCPD_SUBMISSION_TAG>_1d
+\clearpage
+
+\LARGE
+1.f
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_1f
+\begin{answer}
+  % ### START CODE HERE ###
+
+  Both the logistic regression and GDA decision boundaries are separated the classes based on the condition $\{x: p(y=1 \mid x) =0.5\}$. However, since the Newton's method updates based on the derivative's intersection without assuming a Gaussian distribution, it is able to more robustly fit the data. This makes it divide the dataset with a decision boundary that is less sloped than the GDA decision boundary, which fits the dataset more. While the GDA plot divides the dataset vertically (left and right), the logistic regression plot divides the dataset diagonally (southwest and northeast).
+
+    
+  
+  % ### END CODE HERE ###
+\end{answer}
+% <SCPD_SUBMISSION_TAG>_1f
+\clearpage
+
+\LARGE
+1.g
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_1g
+\begin{answer}
+  % ### START CODE HERE ###
+
+  GDA seems to perform worse on Dataset 1 than Dataset 2, as it fails to take into consideration the green data points that are more cleanly divided by the lower slope line formed by logistic regression. This is because GDA makes stronger modeling assumptions of $ x \mid y \sim \mathcal{N}(\mu,\Sigma)$. Dataset 2 shows an oval distribution that is characteristic of Gaussian distributions, while Dataset 1 does not, making Dataset 2 more fit for a GDA plotting.
+  
+  % ### END CODE HERE ###
+\end{answer}
+% <SCPD_SUBMISSION_TAG>_1g
+\clearpage
+
+\LARGE
+1.h
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_1h
+\begin{answer}
+  % ### START CODE HERE ###
+
+  To transform the data to better fit the Gaussian assumption of $\epsilon^{(i)} \sim \mathcal{N}(\mu,\Sigma)$ with a probability density function of $f(x)=\frac{1}{\sigma(2\pi)}e^{-\frac{(\epsilon^{(i)})^2}{2\sigma^2}}$, we can use a variety of methods. One of the most common methods that also handles negative feature values is the Yeo-Johnson transformation. For a given feature and parameter, we can pick a $\lambda \in \mathbb{R}$ and transform each feature as follows:
+  \[ x^{(\lambda)} =  \left\{ \begin{array}{rcl} \frac{(x+1)^\lambda-1}{\lambda} & \text{if} & x \ge 0\text{, } \lambda \neq 0 \\ \log(x+1) & \text{if} & x \ge 0 \text{, } \lambda=0 \\  \frac{-(-x+1)^{2-\lambda}-1}{2-\lambda} & \text{if} & x < 0 \text{, } \lambda \neq 2 \\ -\log(-x+1) \end{array} \right. \]
+  To pick the best $\lambda$, we apply maximum likelihood estimation to $\lambda$.
+  This normalizes the data to approximate a Gaussian distribution, which can improve the performance of the GDA.
+  
+  % ### END CODE HERE ###
+\end{answer}
+% <SCPD_SUBMISSION_TAG>_1h
+\clearpage
+
+\LARGE
+2.c
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_2c
+\begin{answer}
+  % ### START CODE HERE ###
+
+  \begin{flalign*}
+    p(t^{(i)}=1 \mid y^{(i)} &=1, x^{(i)}) = \frac{p(y^{(i)}=1 \mid t^{(i)}=1, x^{(i)})p(t^{(i)}=1, x^{(i)})}{p(y^{(i)}=1, x^{(i)})} \\
+    &= \frac{p(y^{(i)}=1 \mid t^{(i)}=1, x^{(i)}) p(t^{(i)}=1, x^{(i)})}{p(y^{(i)}=1 \mid t^{(i)}=1, x^{(i)})p(t^{(i)}=1, x^{(i)})+p(y^{(i)}=1 \mid t^{(i)}=0, x^{(i)})p(t^{(i)}=0, x^{(i)})} \\
+    &= \frac{p(y^{(i)}=1 \mid t^{(i)}=1, x^{(i)}) p(t^{(i)}=1, x^{(i)})}{p(y^{(i)}=1 \mid t^{(i)}=1, x^{(i)})p(t^{(i)}=1, x^{(i)})} \\
+    &= 1 \text{ for } p(y^{(i)}=1 \mid t^{(i)}=1, x^{(i)}) \neq 0 \text{ and } p(t^{(i)}=1, x^{(i)}) \neq 0
+  \end{flalign*}
+  % ### END CODE HERE ###
+\end{answer}
+% <SCPD_SUBMISSION_TAG>_2c
+\clearpage
+
+\LARGE
+2.d
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_2d
+\begin{answer}
+  % ### START CODE HERE ###
+  By the law of total probability,
+  \begin{flalign*}
+    p(y^{(i)}=1 \mid x^{(i)}) = p(y^{(i)}=1 \mid t^{(i)}=1, x^{(i)})p(t^{(i)}=1 \mid x^{(i)}) + p(y^{(i)}=1 \mid t^{(i)}=0, x^{(i)})p(t^{(i)}=0 \mid x^{(i)})
+  \end{flalign*}
+  Since $p(y^{(i)}=1 \mid t^{(i)}=0, x^{(i)})=0$,
+  \begin{flalign*}
+      &p(y^{(i)}=1 \mid x^{(i)}) = p(y^{(i)}=1 \mid t^{(i)}=1, x^{(i)})p(t^{(i)}=1 \mid x^{(i)}) \\
+      &\Rightarrow p(t^{(i)} =1 \mid x^{(i)}) = \frac{p(y^{(i)}=1 \mid x^{(i)})}{p(y^{(i)}=1 \mid t^{(i)}=1, x^{(i)})} = \frac{1}{\alpha} p(y^{(i)}=1 \mid x^{(i)})
+  \end{flalign*}
+  
+  % ### END CODE HERE ###
+\end{answer}
+% <SCPD_SUBMISSION_TAG>_2d
+\clearpage
+
+\LARGE
+2.e
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_2e
+\begin{answer}
+  % ### START CODE HERE ###
+  Rearranging the equation we derived at 2(d), we get
+  \begin{flalign*}
+    h(x^{(i)}) &= p(y^{(i)}=1 \mid x^{(i)})= p(y^{(i)}=1, t^{(i)}=1 \mid x^{(i)}) + p(y^{(i)}=1, t^{(i)}=0 \mid x^{(i)}) \\
+    &= p(y^{(i)}=1 \mid t^{(i)}=1,x)p(t^{(i)}=1 \mid x^{(i)})+ p(y^{(i)}=1 \mid t^{(i)}=0,x)p(t^{(i)}=0 \mid x^{(i)}) \\
+    &= \alpha \cdot p(t^{(i)}=1 \mid x^{(i)})
+  \end{flalign*}
+
+  Here, we use the key assumption that $p(t^{(i)}=1 \mid x^{(i)}) \in \{0,1\}$.
+  \par
+  \par
+  Case 1. $y^{(i)}=1 \Rightarrow p(t^{(i)}=1 \mid x^{(i)})=1$ and $p(t^{(i)}=0 \mid x^{(i)})=0$
+  \begin{flalign*}
+      h(x^{(i)})=\alpha \cdot p(t^{(i)}=1 \mid x^{(i)}) = \alpha \cdot 1 = \alpha
+  \end{flalign*}
+  Case 2. $y^{(i)}=0 \Rightarrow p(t^{(i)}=1 \mid x^{(i)})=0$ and $p(t^{(i)}=0 \mid x^{(i)})=1$
+  \begin{flalign*}
+      h(x^{(i)})=\alpha \cdot p(t^{(i)}=1 \mid x^{(i)}) = \alpha \cdot 0 = 0
+  \end{flalign*}
+  
+  % ### END CODE HERE ###
+\end{answer}
+% <SCPD_SUBMISSION_TAG>_2e
+\clearpage
+
+\LARGE
+3.ai
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_3ai
+\begin{answer}
+  % ### START CODE HERE ###
+  $1-\rho$ is the fraction of negative examples. Therefore, if a classifier simply predicts every example as negative, it will achieve an accuracy of $1-\rho$.
+  % ### END CODE HERE ###
+\end{answer}
+% <SCPD_SUBMISSION_TAG>_3ai
+\clearpage
+
+\LARGE
+3.aii
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_3aii
+\begin{answer}
+  % ### START CODE HERE ###
+  $\rho$ is the fraction of positive examples.
+  \begin{flalign*}
+      &\text{Number of Positive Examples} \triangleq TP+FN \\
+      &\text{Number of Total Examples} \triangleq TP+TN+FP+FN \\
+      &\rho = \text{Fraction of Positive Examples} \triangleq  \frac{TP+FN}{TP+TN+FP+FN}
+  \end{flalign*}
+  Accuracy is defined as follows:
+  \begin{flalign*}
+      \rho \cdot A_1 +(1-\rho) A_0 &= (\frac{TP+FN}{TP+TN+FP+FN})(\frac{TP}{TP+FN})+(1-\frac{TP+FN}{TP+TN+FP+FN})(\frac{TN}{TN+FP}) \\
+      &= (\frac{TP}{TP+TN+FP+FN})+(\frac{TP+TN+FP+FN-TP-FN}{TP+TN+FP+FN})(\frac{TN}{TN+FP}) \\
+      &= (\frac{TP}{TP+TN+FP+FN})+(\frac{TN+FP}{TP+TN+FP+FN})(\frac{TN}{TN+FP}) \\
+      &= (\frac{TP}{TP+TN+FP+FN})+(\frac{TN}{TP+TN+FP+FN}) \\
+      &= \frac{TP+TN}{TP+TN+FP+FN} \triangleq A \\
+      &\Rightarrow A =\rho \cdot A_1 + (1-\rho) A_0
+  \end{flalign*}
+  % ### END CODE HERE ###
+\end{answer}
+% <SCPD_SUBMISSION_TAG>_3aii
+\clearpage
+
+\LARGE
+3.aiii
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_3aiii
+\begin{answer}
+  % ### START CODE HERE ###
+  If we predict every example as negative, we get the following:
+  \begin{flalign*}
+      &TP = 0 \\
+      &TN = 1-\rho \\
+      &FP = 0 \\
+      &FN = \rho
+  \end{flalign*}
+  From this, we calculate the balanced accuracy:
+  \begin{flalign*}
+      \overline{A} &\triangleq \frac{1}{2}(A_0+A_1) \\
+      &=\frac{1}{2}(\frac{TN}{TN+FP}+\frac{TP}{TP+FN}) \\
+      &= \frac{1}{2}(\frac{1-\rho}{1-\rho}+\frac{0}{\rho}) \\
+      &= \frac{1}{2} \\
+      &= 50\%
+  \end{flalign*}
+  
+  % ### END CODE HERE ###
+\end{answer}
+% <SCPD_SUBMISSION_TAG>_3aiii
+\clearpage
+
+\LARGE
+3.c
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_3c
+\begin{answer}
+  % ### START CODE HERE ###
+  If we apply the re-weighting, we get $\rho' = \frac{1}{\kappa}\rho = \left(\frac{1-\rho}{\rho}\right)\rho=1-\rho$. In other words, the number of positive examples ($TP'+FN'$) in $\mathcal{D}'$ is equal to the number of negative examples ($TN+FP$) in $\mathcal{D}$. Since the total number of negative examples stay constant, $TN'=TN$ and $FP'=FP$. We can then equate $TP'+FN'=TN'+FP'$. This means that \begin{flalign*}
+      TP'+FN' &= TN+FP=TN'+FP' \\
+      A_1' &= \frac{TP'}{TP'+FN'} =  \frac{\frac{1}{\kappa}TP}{\frac{1}{\kappa}TP+\frac{1}{\kappa}FN} = \frac{TP}{TP+FN} = A_1 \\
+      A_0' &= \frac{TN'}{TN'+FP'} =  \frac{\frac{1}{\kappa}TN}{\frac{1}{\kappa}TN+\frac{1}{\kappa}FP} = \frac{TN}{TN+FP} = A_0 \\
+      \rho' &= \frac{TP'+FN'}{TP'+TN'+FP'+FN'} \\
+      &= \frac{TP'+FN'}{TP'+FN'+TP'+FN'} \\
+      &= \frac{TP'+FN'}{2(TP'+FN')} \\
+      &= \frac{1}{2} \\
+      \Rightarrow A' &= \rho' \cdot A_1'+(1-\rho')A_0' = \frac{1}{2} \cdot A_1'+(1-\frac{1}{2})A_0' \\
+      &= \frac{1}{2} (A_1'+A_0') \\
+      &= \frac{1}{2} (A_1+A_0) = \overline{A}
+  \end{flalign*}
+  Originally, we have the cost function as
+  \begin{flalign*}
+      J(\theta)=-\frac{1}{n} \sum_{i=1}^n \left( y^{(i)}\log(h_\theta(x^{(i)}))+(1-y^{(i)})\log(1-h_\theta(x^{(i)}))\right)
+  \end{flalign*}
+  However, with $\mathcal{D}'$, our dataset includes an extra $\frac{1}{\kappa}-1$ times the number of positive examples ($y^{(i)}=1$).
+  This means that the new mean of the cost function is calculated as follows:
+  \begin{flalign*}
+      \vert D \vert &= n = TP+TN+FP+FN \\
+      \frac{1+\kappa}{2n} &= \frac{\frac{TN+FP}{TN+FP}+\frac{TP+FN}{TN+FP}}{2(TP+TN+FP+FN)} \\
+      &= \frac{\frac{TP+TN+FP+FN}{TN+FP}}{2(TP+TN+FP+FN)} \\
+      &= \frac{1}{2(TN+FP)} (\text{remember that above we found that } TP'+FN'=TN+FP=TN'+FP') \\
+      &= \frac{1}{TP'+TN'+FP'+FN'} \\
+      &= \frac{1}{\vert \mathcal{D}' \vert} \text{ since } \vert \mathcal{D}' \vert \triangleq TP'+TN'+FP'+FN'
+  \end{flalign*}
+  Furthermore, we need to calculate the costs for the newly created positive examples, so we define a function
+  \begin{flalign*}
+      w^{(i)}=\left \{ \begin{array}{rcl} 1 & \text{if} & y^{(i)}=0 \\ \frac{1}{\kappa} & \text{if} & y^{(i)}=1 \end{array} \right.
+  \end{flalign*}
+  This will be multiplied to $y^{(i)}\log(h_\theta(x^{(i)}))+(1-y^{(i)})\log(1-h_\theta(x^{(i)}))$ to include the extra $\frac{1}{\kappa}-1$ positive examples. Finally, our updated cost function looks as follows:
+  \begin{flalign*}
+      J(\theta)=-\frac{1+\kappa}{2n} \sum_{i=1}^n w^{(i)}\left( y^{(i)}\log(h_\theta(x^{(i)}))+(1-y^{(i)})\log(1-h_\theta(x^{(i)}))\right)
+  \end{flalign*}
+  % ### END CODE HERE ###
+\end{answer}
+% <SCPD_SUBMISSION_TAG>_3c
+
+% <SCPD_SUBMISSION_TAG>_entire_submission
+
+\end{document}
