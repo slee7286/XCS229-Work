@@ -1,0 +1,75 @@
+BEGIN:VCALENDAR
+METHOD:PUBLISH
+PRODID:Microsoft Exchange Server 2010
+VERSION:2.0
+BEGIN:VTIMEZONE
+TZID:tzone://Microsoft/Utc
+BEGIN:STANDARD
+DTSTART:16010101T000000
+TZOFFSETFROM:+0000
+TZOFFSETTO:+0000
+END:STANDARD
+BEGIN:DAYLIGHT
+DTSTART:16010101T000000
+TZOFFSETFROM:+0000
+TZOFFSETTO:+0000
+END:DAYLIGHT
+END:VTIMEZONE
+BEGIN:VEVENT
+ORGANIZER;CN=Christina Zuno:mailto:czuno@stanford.edu
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=Insop Song
+ :mailto:insop@stanford.edu
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=xcs224w-st
+ aff:mailto:xcs224w-staff@stanford.edu
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=xcs229-sta
+ ff:mailto:xcs229-staff@stanford.edu
+ATTENDEE;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=TRUE;CN=xcs236-sta
+ ff:mailto:xcs236-staff@stanford.edu
+DESCRIPTION:XCS224W\, XCS229\, XCS236\n\n\n[https://st2.zoom.us/static/6.3.
+ 36139/image/new/ZoomLogo_110_25.png]<http://zoom.us/>\nHi there\,\nChristi
+ na Zuno is inviting you to a scheduled Zoom meeting.\nJoin Zoom Meeting<ht
+ tps://stanford.zoom.us/j/93418466316?pwd=ecRhwmMANisy27fu9lGMuoLwa8j1sK.1&
+ from=addon>\nPassword:\n720395\nMeeting URL:\nhttps://stanford.zoom.us/j/9
+ 3418466316?pwd=ecRhwmMANisy27fu9lGMuoLwa8j1sK.1&from=addon\niPhone one-tap
+  (US Toll):\n+18333021536\,\,93418466316# or +16507249799\,\,93418466316#\
+ nOr Telephone:\nDial:\n+1 650 724 9799 (US\, Canada\, Caribbean Toll) or +
+ 1 833 302 1536 (US\, Canada\, Caribbean Toll Free)\nMeeting ID:\n934 1846 
+ 6316\nPassword:\n720395\nInternational numbers<https://stanford.zoom.us/u/
+ anxz6RRpj>\nJoin from a SIP room system\nSIP:\n93418466316@zoomcrc.com\nMe
+ eting ID:\n934 1846 6316\nPassword:\n720395\n\n
+UID:040000008200E00074C5B7101A82E008000000002B2923DB2CCFDB01000000000000000
+ 0100000003B8F8328CAE34C4A835439C337384649
+SUMMARY:Industry Session: DeepSeek 
+DTSTART:20250613T160000Z
+DTEND:20250613T170000Z
+CLASS:PUBLIC
+PRIORITY:5
+DTSTAMP:20250528T051909Z
+TRANSP:OPAQUE
+STATUS:CONFIRMED
+SEQUENCE:0
+LOCATION:https://stanford.zoom.us/j/93418466316?pwd=ecRhwmMANisy27fu9lGMuoL
+ wa8j1sK.1&from=addon
+X-MICROSOFT-CDO-BUSYSTATUS:BUSY
+X-MICROSOFT-CDO-INTENDEDSTATUS:BUSY
+X-MICROSOFT-CDO-ALLDAYEVENT:FALSE
+X-MICROSOFT-CDO-IMPORTANCE:1
+X-MICROSOFT-CDO-INSTTYPE:0
+X-MICROSOFT-ONLINEMEETINGEXTERNALLINK:
+X-MICROSOFT-ONLINEMEETINGCONFLINK:
+X-MICROSOFT-DONOTFORWARDMEETING:FALSE
+X-MICROSOFT-DISALLOW-COUNTER:FALSE
+X-MICROSOFT-LOCATIONDISPLAYNAME:https://stanford.zoom.us/j/93418466316?pwd=
+ ecRhwmMANisy27fu9lGMuoLwa8j1sK.1&from=addon
+X-MICROSOFT-LOCATIONS:[{"DisplayName":"https://stanford.zoom.us/j/934184663
+ 16?pwd=ecRhwmMANisy27fu9lGMuoLwa8j1sK.1&from=addon"\,"LocationAnnotation":
+ ""\,"LocationUri":""\,"LocationStreet":""\,"LocationCity":""\,"LocationSta
+ te":""\,"LocationCountry":""\,"LocationPostalCode":""\,"LocationFullAddres
+ s":""}]
+BEGIN:VALARM
+DESCRIPTION:REMINDER
+TRIGGER;RELATED=START:-PT15M
+ACTION:DISPLAY
+END:VALARM
+END:VEVENT
+END:VCALENDAR
