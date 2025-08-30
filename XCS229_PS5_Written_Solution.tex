@@ -1,0 +1,699 @@
+
+\documentclass{article}
+\usepackage[top = 1.0in]{geometry}
+
+\usepackage{graphicx}
+
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{bm}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{framed}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\newcommand{\di}{{d}}
+\newcommand{\nexp}{{n}}
+\newcommand{\nf}{{p}}
+\newcommand{\vcd}{{\textbf{D}}}
+\newcommand{\Int}{\mathbb{Z}}
+\newcommand\bb{\ensuremath{\mathbf{b}}}
+\newcommand\bs{\ensuremath{\mathbf{s}}}
+\newcommand\bp{\ensuremath{\mathbf{p}}}
+\newcommand{\relu} { \operatorname{ReLU} }
+\newcommand{\smx} { \operatorname{softmax} }
+\newcommand\bx{\ensuremath{\mathbf{x}}}
+\newcommand\bh{\ensuremath{\mathbf{h}}}
+\newcommand\bc{\ensuremath{\mathbf{c}}}
+\newcommand\bW{\ensuremath{\mathbf{W}}}
+\newcommand\by{\ensuremath{\mathbf{y}}}
+\newcommand\bo{\ensuremath{\mathbf{o}}}
+\newcommand\be{\ensuremath{\mathbf{e}}}
+\newcommand\ba{\ensuremath{\mathbf{a}}}
+\newcommand\bu{\ensuremath{\mathbf{u}}}
+\newcommand\bv{\ensuremath{\mathbf{v}}}
+\newcommand\bP{\ensuremath{\mathbf{P}}}
+\newcommand\bg{\ensuremath{\mathbf{g}}}
+\newcommand\bX{\ensuremath{\mathbf{X}}}
+% real numbers R symbol
+\newcommand{\Real}{\mathbb{R}}
+
+% encoder hidden
+\newcommand{\henc}{\bh^{\text{enc}}}
+\newcommand{\hencfw}[1]{\overrightarrow{\henc_{#1}}}
+\newcommand{\hencbw}[1]{\overleftarrow{\henc_{#1}}}
+
+% encoder cell
+\newcommand{\cenc}{\bc^{\text{enc}}}
+\newcommand{\cencfw}[1]{\overrightarrow{\cenc_{#1}}}
+\newcommand{\cencbw}[1]{\overleftarrow{\cenc_{#1}}}
+
+% decoder hidden
+\newcommand{\hdec}{\bh^{\text{dec}}}
+
+% decoder cell
+\newcommand{\cdec}{\bc^{\text{dec}}}
+
+\usepackage[hyperfootnotes=false]{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor = blue,
+  urlcolor  = blue,
+  citecolor = blue,
+  anchorcolor = blue,
+  pdfborderstyle={/S/U/W 1}
+}
+\usepackage{nccmath}
+\usepackage{mathtools}
+\usepackage{graphicx,caption}
+\usepackage[shortlabels]{enumitem}
+\usepackage{epstopdf,subcaption}
+\usepackage{psfrag}
+\usepackage{amsmath,amssymb,epsf}
+\usepackage{verbatim}
+\usepackage{cancel}
+\usepackage{color,soul}
+\usepackage{bbm}
+\usepackage{listings}
+\usepackage{setspace}
+\usepackage{float}
+\definecolor{Code}{rgb}{0,0,0}
+\definecolor{Decorators}{rgb}{0.5,0.5,0.5}
+\definecolor{Numbers}{rgb}{0.5,0,0}
+\definecolor{MatchingBrackets}{rgb}{0.25,0.5,0.5}
+\definecolor{Keywords}{rgb}{0,0,1}
+\definecolor{self}{rgb}{0,0,0}
+\definecolor{Strings}{rgb}{0,0.63,0}
+\definecolor{Comments}{rgb}{0,0.63,1}
+\definecolor{Backquotes}{rgb}{0,0,0}
+\definecolor{Classname}{rgb}{0,0,0}
+\definecolor{FunctionName}{rgb}{0,0,0}
+\definecolor{Operators}{rgb}{0,0,0}
+\definecolor{Background}{rgb}{0.98,0.98,0.98}
+\lstdefinelanguage{Python}{
+    numbers=left,
+    numberstyle=\footnotesize,
+    numbersep=1em,
+    xleftmargin=1em,
+    framextopmargin=2em,
+    framexbottommargin=2em,
+    showspaces=false,
+    showtabs=false,
+    showstringspaces=false,
+    frame=l,
+    tabsize=4,
+    % Basic
+    basicstyle=\ttfamily\footnotesize\setstretch{1},
+    backgroundcolor=\color{Background},
+    % Comments
+    commentstyle=\color{Comments}\slshape,
+    % Strings
+    stringstyle=\color{Strings},
+    morecomment=[s][\color{Strings}]{"""}{"""},
+    morecomment=[s][\color{Strings}]{'''}{'''},
+    % keywords
+    morekeywords={import,from,class,def,for,while,if,is,in,elif,else,not,and,or
+    ,print,break,continue,return,True,False,None,access,as,,del,except,exec
+    ,finally,global,import,lambda,pass,print,raise,try,assert},
+    keywordstyle={\color{Keywords}\bfseries},
+    % additional keywords
+    morekeywords={[2]@invariant},
+    keywordstyle={[2]\color{Decorators}\slshape},
+    emph={self},
+    emphstyle={\color{self}\slshape},
+%
+}
+\lstMakeShortInline|
+
+\pagestyle{empty} \addtolength{\textwidth}{1.0in}
+\addtolength{\textheight}{0.5in}
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\newcommand{\ruleskip}{\bigskip\hrule\bigskip}
+\newcommand{\nodify}[1]{{\sc #1}}
+\newenvironment{answer}{\sf \begingroup\color{ForestGreen}}{\endgroup}%
+
+\setlist[itemize]{itemsep=2pt, topsep=0pt}
+\setlist[enumerate]{itemsep=6pt, topsep=0pt}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\setlist[enumerate]{parsep=4pt}
+\setlength{\unitlength}{1cm}
+
+\renewcommand{\Re}{{\mathbb R}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\what}[1]{\widehat{#1}}
+
+\renewcommand{\comment}[1]{}
+\newcommand{\mc}[1]{\mathcal{#1}}
+\newcommand{\half}{\frac{1}{2}}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\def\KL{D_{KL}}
+\def\xsi{x^{(i)}}
+\def\ysi{y^{(i)}}
+\def\zsi{z^{(i)}}
+\def\E{\mathbb{E}}
+\def\calN{\mathcal{N}}
+\def\calD{\mathcal{D}}
+\def\slack{\url{http://xcs229-scpd.slack.com/}}
+\def\zipscriptalt{\texttt{python zip\_submission.py}}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
+ 
+\usepackage{bbding}
+\usepackage{pifont}
+\usepackage{wasysym}
+\usepackage{amssymb}
+\usepackage{framed}
+\usepackage{scrextend}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+\newcommand{\alns}[1] {
+	\begin{align*} #1 \end{align*}
+}
+
+\newcommand{\pd}[2] {
+ \frac{\partial #1}{\partial #2}
+}
+\renewcommand{\Re} { \mathbb{R} }
+\newcommand{\btx} { \mathbf{\tilde{x}} }
+\newcommand{\bth} { \mathbf{\tilde{h}} }
+\newcommand{\sigmoid} { \operatorname{\sigma} }
+\newcommand{\CE} { \operatorname{CE} }
+\newcommand{\byt} { \hat{\by} }
+\newcommand{\yt} { \hat{y} }
+
+\newcommand{\oft}[1]{^{(#1)}}
+\newcommand{\fone}{\ensuremath{F_1}}
+
+\newcommand{\ac}[1]{ {\color{red} \textbf{AC:} #1} }
+\newcommand{\ner}[1]{\textbf{\color{blue} #1}}
+
+\def\assignmentnum{5 }
+\def\assignmenttitle{XCS229 Problem Set \assignmentnum}
+
+\begin{document}
+\pagestyle{myheadings} \markboth{}{\assignmenttitle}
+
+% <SCPD_SUBMISSION_TAG>_entire_submission
+
+This handout includes space for every question that requires a written response.
+Please feel free to use it to handwrite your solutions (legibly, please).  If
+you choose to typeset your solutions, the |README.md| for this assignment includes
+instructions to regenerate this handout with your typeset \LaTeX{} solutions.
+\ruleskip
+
+\LARGE
+1.
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_1
+  \begin{answer}
+      % ### START CODE HERE ###
+      We can see that the projection of point $x$ onto the direction given by the unit vector $u$ is equal to $f_u(x)=\text{arg} \underset{v \in \mathcal{V}}{\text{min}} \vert\vert x-v \vert\vert^2$ where $\mathcal{V} = \{ \alpha u : \alpha \in \mathbb{R} \}$.
+      \begin{flalign*}
+          \vert\vert x-\alpha u \vert\vert^2 &= (x-\alpha u)^T(x-\alpha u) \\
+          &= x^Tx -2x^T\alpha u +\alpha^2 u^Tu \\
+          &= x^Tx -2x^T\alpha u +\alpha^2
+      \end{flalign*}
+      Now, taking the gradient with respect to $\alpha$ and setting it to $0$, we minimize the quadratic and find the shortest distance between $x$ and $\alpha u$:
+      \begin{flalign*}
+          \nabla_\alpha f_u(x) &= \nabla_\alpha (x^Tx -2x^T\alpha u +\alpha^2) \\
+          &= -2x^Tu + 2\alpha = 0 \\
+          &\Rightarrow \alpha = x^Tu
+      \end{flalign*}
+      Therefore, the scalar projection of $x$ onto $u$, which is equal to $\alpha$, is $x^Tu$ and the vector form of the projection is $u^Txu$.
+      This means that finding the $u$ that minimizes the mean squared error between projected points and original points can be rewritten as:
+      \begin{flalign*}
+          \text{arg} \underset{u:u^Tu=1}{\text{min}} \sum_{i=1}^n \vert\vert x^{(i)} - f_u (x^{(i)})\vert\vert^2_2 &= \text{arg} \underset{u:u^Tu=1}{\text{min}} \sum_{i=1}^n \vert\vert x^{(i)} - u^Tx^{(i)}u \vert\vert^2_2 \\
+          &= \text{arg} \underset{u:u^Tu=1}{\text{min}} \sum_{i=1}^n \vert\vert x^{(i)} \vert\vert^2_2 + \vert\vert u^Tx^{(i)}u \vert\vert^2_2 - 2 \langle x^{(i)},u^Tx^{(i)}u\rangle \quad \text{Remember that scalar } \alpha = u^Tx^{(i)} \\ 
+          &= \text{arg} \underset{u:u^Tu=1}{\text{min}} \sum_{i=1}^n \vert\vert x^{(i)} \vert\vert^2_2 + \left( u^Tx^{(i)}\right)^2 \vert\vert u \vert\vert^2_2 - 2 \left( u^Tx^{(i)}\right) \langle x^{(i)},u\rangle \quad \text{Use } u^Tu=1 \\
+          &= \text{arg} \underset{u:u^Tu=1}{\text{min}} \sum_{i=1}^n \vert\vert x^{(i)} \vert\vert^2_2 + \left( u^Tx^{(i)}\right)^2 - 2 \left( u^Tx^{(i)}\right) \left( u^Tx^{(i)}\right) \\
+          &=\text{arg} \underset{u:u^Tu=1}{\text{min}} \sum_{i=1}^n \vert\vert x^{(i)} \vert\vert^2_2 - \sum_{i=1}^n \left( u^Tx^{(i)}\right)^2
+          &= \text{arg} \underset{u:u^Tu=1}{\text{min}} \sum_{i=1}^n \vert\vert x^{(i)} \vert\vert^2_2 - \sum_{i=1}^n \left( u^Tx^{(i)}\right)^2 \\
+          &= \text{arg} \underset{u:u^Tu=1}{\text{min}} -\sum_{i=1}^n \left( u^Tx^{(i)}\right)^2 \\
+          &= \text{arg} \underset{u:u^Tu=1}{\text{max}} \sum_{i=1}^n \left( u^Tx^{(i)}\right)^2
+      \end{flalign*}
+      We have now found an expression to simplify $\text{arg} \underset{u:u^Tu=1}{\text{min}} \sum_{i=1}^n \vert\vert x^{(i)} - f_u (x^{(i)})\vert\vert^2_2$, which we want to prove finds $u$ which is the first principal component of the dataset. We also know from principal component analysis that finding the first principal component is equivalent to finding the $u$ that solves the $\text{arg} \underset{u:u^Tu=1}{\text{max}} u^T \left( \frac{1}{n} \sum_{i=1}^n x^{(i)}x^{(i)^T} \right) u$. This is equivalent to finding the principal eigenvector for $\Sigma = \frac{1}{n} \sum_{i=1}^n x^{(i)}x^{(i)^T}$, which is just the empirical covariance matrix of the data (since the data is already centered). We can rewrite the argmax that solves for the first principal component as follows:
+      \begin{flalign*}
+          \text{arg} \underset{u:u^Tu=1}{\text{max}} u^T \left( \frac{1}{n} \sum_{i=1}^n x^{(i)}x^{(i)^T} \right) u = \text{arg} \underset{u:u^Tu=1}{\text{max}} \frac{1}{n} \sum_{i=1}^n \left( u^Tx^{(i)} \right)^2 \\
+          \text{arg} \underset{u:u^Tu=1}{\text{max}} \sum_{i=1}^n \left( u^Tx^{(i)} \right)^2
+      \end{flalign*}
+      Therefore, we can conclude that the unit-length vector $u$ that minimizes the mean squared error between projected points and original points corresponds to the first principal component for the data
+      \begin{flalign*}
+          \text{arg} \underset{u:u^Tu=1}{\text{min}} \sum_{i=1}^n \vert\vert x^{(i)} - f_u (x^{(i)})\vert\vert^2_2 = \text{arg} \underset{u:u^Tu=1}{\text{max}} \sum_{i=1}^n \left( u^Tx^{(i)} \right)^2 = \text{Principal eigenvector of the empirical covariance matrix of the data}
+      \end{flalign*}
+      % ### END CODE HERE ###
+  \end{answer}
+% <SCPD_SUBMISSION_TAG>_1
+\clearpage
+
+\LARGE
+2.a
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_2a
+  \begin{answer}
+    By definition of the M-step, $\theta^{(t+1)}$ maximizes the expression $\alpha \ell_\text{sup}(\theta^{(t+1)}) + \ell_\text{unsup}(\theta^{(t+1)})$ with respect to $\theta$. Therefore, we can conclude that $\alpha \ell_\text{sup}(\theta^{(t+1)}) + \ell_\text{unsup}(\theta^{(t+1)}) \ge \alpha \ell_\text{sup}(\theta^{(t)}) + \ell_\text{unsup}(\theta^{(t)})$ 
+    \begin{flalign*}
+        \ell(\theta^{(t+1)})
+        &= \alpha \ell_\text{sup}(\theta^{(t+1)}) + \ell_\text{unsup}(\theta^{(t+1)})
+            &\text{Definition} \\
+        &\ge \alpha \ell_\text{sup}(\theta^{(t+1)}) + \sum_{i=1}^\nexp\sum_{\zsi}Q_i^{(t)}(\zsi)\log\frac{p(\xsi,\zsi;\theta^{(t+1)})}{Q_i^{(t)}(\zsi)}
+            &\text{Jensen's inequality} \\
+        % ### START CODE HERE ###
+        &= \alpha \sum_{i=1}^{\tilde{n}} \log p(\tilde{x}^{(i)},\tilde{z}^{(i)};\theta^{(t+1)}) + \sum_{i=1}^\nexp\sum_{\zsi}Q_i^{(t)}(\zsi)\log\frac{p(\xsi,\zsi;\theta^{(t+1)})}{Q_i^{(t)}(\zsi)} \\
+        &\ge \alpha \sum_{i=1}^{\tilde{n}} \log p(\tilde{x}^{(i)},\tilde{z}^{(i)};\theta^{(t)}) + \sum_{i=1}^\nexp\sum_{\zsi}Q_i^{(t)}(\zsi)\log\frac{p(\xsi,\zsi;\theta^{(t)})}{Q_i^{(t)}(\zsi)} \\
+        &= \alpha \ell_\text{sup}(\theta^{(t)}) + \ell_\text{unsup}(\theta^{(t)}) \\
+        &= \ell_{\text{semi-sup}}(\theta^{(t)})
+      \end{flalign*}
+      Therefore, we can conclude that $\ell_{\text{semi-sup}}(\theta^{(t+1)}) \ge \ell_{\text{semi-sup}}(\theta^{(t)})$
+      % ### END CODE HERE ###
+  \end{answer}
+% <SCPD_SUBMISSION_TAG>_2a
+\clearpage
+
+
+\LARGE
+2.b
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_2b
+  \begin{answer}
+  % ### START CODE HERE ###
+  The original GMM EM algorithm looks as follows:
+  \begin{flalign*}
+      &\text{Repeat until convergence: \quad \{} \\
+      &\qquad \text{(E-step) For each } i,j, \text{ set} \\
+      &\qquad \qquad w_j^{(i)} := p(z^{(i)}=j \mid x^{(i)}; \phi,\mu,\Sigma) \\
+      &\qquad \text{(M-step) Update the parameters:} \\
+      &\qquad \qquad \phi_j \quad := \quad \frac{1}{n} \sum_{i=1}^n w_j^{(i)}, \\
+      &\qquad \qquad \mu_j \quad := \quad \frac{\sum_{i=1}^n w_j^{(i)}x{(i)}}{\sum_{i=1}^n w_j^{(i)}}, \\
+      &\qquad \qquad \Sigma_j \quad := \quad \frac{\sum_{i=1}^n w_j^{(i)}(x^{(i)}-\mu_j)(x^{(i)}-\mu_j)^T}{\sum_{i=1}^n w_j^{(i)}} \\
+      &\}
+  \end{flalign*}
+  Now we focus on the E-step, for which we need to include the $\tilde{n}$ supervised examples with observed labels $\tilde{z}^{(i)}$. In the original unsupervised EM algorithm, we have latent variables $z^{(i)}$ for each data point $x^{(i)}$. However, since these $\tilde{z}^{(i)}$ are observed, they are not latent variables. Therefore, the estimation step remains the same: since $\tilde{z}^{(i)}$ are observed, these can directly be accounted for in the M-step through counting if $\tilde{z}^{(i)} = j$. Therefore, the task reduced down to 
+  \begin{flalign*}
+      &\text{Latent Variable: } \{z^{(i)}\}_{i=1}^n \text{ for } i \in \mathbb{N} \\
+      &w_j^{(i)} := p(z^{(i)}=j \mid x^{(i)}; \phi,\mu,\Sigma) \\
+      &\qquad = \frac{p(x^{(i)} \mid z^{(i)}=j; \mu,\Sigma)\ p(z^{(i)}=j;\phi)}{\sum_{l=1}^k p(x^{(i)} \mid z^{(i)}=l; \mu, \phi)\ p(z^{(i)}=l;\phi)} \\
+      &\qquad \frac{\frac{1}{(2\pi)^{d/2} \vert \Sigma_j \vert^{1/2}} e^{-\frac{1}{2}(x-\mu_j)^T \Sigma_j^{-1} (x-\mu_j)} \phi_j}{\sum_{l=1}^k \frac{1}{(2\pi)^{d/2} \vert \Sigma_l \vert^{1/2}} e^{-\frac{1}{2}(x-\mu_l)^T \Sigma_l^{-1} (x-\mu_l)} \phi_l}
+  \end{flalign*}
+  % ### END CODE HERE ###
+  \end{answer}
+% <SCPD_SUBMISSION_TAG>_2b
+\clearpage
+
+\LARGE
+2.c
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_2c
+  \begin{answer}
+    List the parameters which need to be re-estimated in the M-step:\\
+
+    % ### START CODE HERE ###
+    \[ \phi, \Sigma, \mu \]
+    % ### END CODE HERE ###
+
+    \allowdisplaybreaks
+
+    In order to simplify derivation, it is useful to denote $$w_j^{(i)} = Q^{(t)}_i(\zsi=j),$$ and $$\tilde{w}_j^{(i)} = \begin{cases} \alpha & \tilde{z}^{(i)} = j \\ 0 & \text{ otherwise.} \end{cases}$$
+
+    We further denote $S = \Sigma^{-1}$, and note that because of chain rule of calculus, $\nabla_S\ell = 0 \Rightarrow \nabla_\Sigma \ell = 0$. So we choose to rewrite the M-step in terms of $S$ and maximize it w.r.t $S$, and re-express the resulting solution back in terms of $\Sigma$.
+
+    Based on this, the M-step becomes:
+    \begin{align*}
+    \phi^{(t+1)}, \mu^{(t+1)}, S^{(t+1)} &= \arg\max_{\phi,\mu,S} \sum_{i=1}^\nexp \sum_{j=1}^k Q_i^{(t)}(\zsi) \log \frac{p(\xsi,\zsi;\phi,\mu,S)}{Q_i^{(t)}(\zsi)} + \alpha \sum_{i=1}^{\tilde{\nexp}} \log p(\tilde{x}^{(i)}, \tilde{z}^{(i)}; \phi, \mu, S)\\
+    &=
+    % ### START CODE HERE ###
+    \arg\max_{\phi,\mu,S} \bigg[ \sum_{i=1}^\nexp \sum_{j=1}^k  w_j^{(i)} \left( \log(\frac{1}{(2\pi)^{d/2} \vert S_j^{-1} \vert^{1/2}} e^{-\frac{1}{2}(x^{(i)}-\mu_j)^T S_j (x^{(i)}-\mu_j)}) + \log(\phi_j) - \log(w_j^{(i)}) \right) \\
+    &+ \alpha \sum_{i=1}^{\tilde{n}} \sum_{j=1}^k \left( \log(\frac{1}{(2\pi)^{d/2} \vert S_j^{-1} \vert^{1/2}} e^{-\frac{1}{2}(\tilde{x}^{(i)}-\mu_j)^T S_j (\tilde{x}^{(i)}-\mu_j)}) + \log(\phi_j) \right) \bigg] \\
+    &= \arg\max_{\phi,\mu,S} \bigg[ \sum_{i=1}^\nexp \sum_{j=1}^k w_j^{(i)} \left( -\frac{1}{2} \log(\vert S_j^{-1} \vert) -\frac{1}{2} (x^{(i)}-\mu_j)^T S_j (x^{(i)}-\mu_j) + \log(\phi_j) - \log(w_j^{(i)}) \right) \\
+    &+ \sum_{i=1}^{\tilde{n}} \sum_{j=1}^k \tilde{w}_j^{(i)} \left( -\frac{1}{2} \log(\vert S_j^{-1} \vert) -\frac{1}{2} \left( (\tilde{x}^{(i)}-\mu_j)^T S_j (\tilde{x}^{(i)}-\mu_j) \right) + \log(\phi_j) \right) \bigg]
+    % ### END CODE HERE ###
+    \end{align*}
+
+    Now, calculate the update steps by maximizing the expression within the argmax for each parameter (We will do the first for you).
+
+    ${\mathbf \phi_j}$: We construct the Lagrangian including the constraint that $\sum_{j=1}^k \phi_j = 1$, and absorbing all irrelevant terms into constant $C$:
+    \begin{align*}
+    \mathcal{L}(\phi, \beta) &= C + \sum_{i=1}^\nexp\sum_{j=1}^k w^{(i)}_j \log \phi_j + \sum_{i=1}^{\tilde{\nexp}}\sum_{j=1}^k \tilde{w}^{(i)}_j \log \phi_j + \beta\left(\sum_{j=1}^k \phi_j - 1\right) \\
+    \nabla_{\phi_j}\mathcal{L}(\phi, \beta) &=  \sum_{i=1}^\nexp w^{(i)}_j\frac{1}{\phi_j} + \sum_{i=1}^{\tilde{\nexp}} \tilde{w}^{(i)}_j\frac{1}{\phi_j} + \beta = 0 \\
+    &\Rightarrow \phi_j = \frac{\sum_{i=1}^\nexp w^{(i)}_j + \sum_{i=1}^{\tilde{\nexp}} \tilde{w}^{(i)}_j}{-\beta} \\
+    \nabla_\beta\mathcal{L}(\phi,\beta) &= \sum_{j=1}^k \phi_j -1 = 0 \\
+    &\Rightarrow \sum_{j=1}^k \frac{\sum_{i=1}^\nexp w^{(i)}_j + \sum_{i=1}^{\tilde{\nexp}} \tilde{w}^{(i)}_j}{-\beta} = 1 \\
+    &\Rightarrow -\beta = \sum_{j=1}^k \left(\sum_{i=1}^\nexp w^{(i)}_j + \sum_{i=1}^{\tilde{\nexp}} \tilde{w}^{(i)}_j\right)  \\
+    \Rightarrow \phi_j^{(t+1)} &= \frac{ \sum_{i=1}^\nexp w_j^{(i)} + \sum_{i=1}^{\tilde{\nexp}}\tilde{w}_j^{(i)}} { \sum_{j=1}^k \left(\sum_{i=1}^\nexp w^{(i)}_j + \sum_{i=1}^{\tilde{\nexp}} \tilde{w}^{(i)}_j\right) } \\
+    &= \frac{ \sum_{i=1}^\nexp w_j^{(i)} + \sum_{i=1}^{\tilde{\nexp}}\tilde{w}_j^{(i)}} { \nexp + \alpha \tilde{\nexp}}
+    \end{align*}
+
+    ${\mathbf \mu_j}$: Next, derive the update for $\mu_j$.  Do this by maximizing the expression with the argmax above with respect to $\mu_j$.\\
+
+    First, calculate the gradient with respect to $\mu_j$:
+
+    \begin{flalign*}
+    \nabla_{\mu_j} &= \sum_{i=1}^n w_j^{(i)}(S_j(x^{(i)}-\mu_j)) + \sum_{i=1}^{\tilde{n}} \tilde{w}_j^{(i)} (S_j(\tilde{x}^{(i)}-\mu_j))
+    % ### START CODE HERE ###
+    % ### END CODE HERE ###
+    \end{flalign*}
+
+    Next, set the gradient to zero and solve for $\mu_j$:
+
+    \begin{align*}
+    0 &=
+    % ### START CODE HERE ###
+    \sum_{i=1}^n w_j^{(i)}(S_j(x^{(i)}-\mu_j)) + \sum_{i=1}^{\tilde{n}} \tilde{w}_j^{(i)} (S_j(\tilde{x}^{(i)}-\mu_j)) \\
+    &= S_j \left[ \sum_{i=1}^n w_j^{(i)}(x^{(i)}-\mu_j) + \sum_{i=1}^{\tilde{n}} \tilde{w}_j^{(i)} (\tilde{x}^{(i)}-\mu_j)\right] \\
+    0 &= \sum_{i=1}^n w_j^{(i)}(x^{(i)}-\mu_j) + \sum_{i=1}^{\tilde{n}} \tilde{w}_j^{(i)} (\tilde{x}^{(i)}-\mu_j) \\
+    &= \sum_{i=1}^n w_j^{(i)}x^{(i)} - \sum_{i=1}^n w_j^{(i)}\mu_j + \sum_{i=1}^{\tilde{n}} \tilde{w}_j^{(i)} \tilde{x}^{(i)} - \sum_{i=1}^{\tilde{n}} \tilde{w}_j^{(i)} \mu_j \\
+    \sum_{i=1}^n w_j^{(i)}x^{(i)} + \sum_{i=1}^{\tilde{n}} \tilde{w}_j^{(i)} \tilde{x}^{(i)} &= \sum_{i=1}^n w_j^{(i)}\mu_j + \sum_{i=1}^{\tilde{n}} \tilde{w}_j^{(i)} \mu_j = \mu_j \left( \sum_{i=1}^n w_j^{(i)} + \sum_{i=1}^{\tilde{n}} \tilde{w}_j^{(i)} \right) \\
+    \mu_j &= \frac{\sum_{i=1}^n w_j^{(i)}x^{(i)} + \sum_{i=1}^{\tilde{n}} \tilde{w}_j^{(i)} \tilde{x}^{(i)}}{\sum_{i=1}^n w_j^{(i)} + \sum_{i=1}^{\tilde{n}} \tilde{w}_j^{(i)}}
+    % ### END CODE HERE ###
+    \end{align*}
+
+    ${\mathbf \Sigma_j}$: Finally, derive the update for $\Sigma_j$ via $S_j$.  Again, Do this by maximizing the expression with the argmax above with respect to $S_j$.\\.
+
+    First, calculate the gradient with respect to $S_j$:
+
+    \begin{flalign*}
+    \nabla_{S_j} &= 
+    % ### START CODE HERE ###
+    \sum_{i=1}^\nexp w_j^{(i)} \left( \frac{1}{2} S_j^{-1} -\frac{1}{2} (x^{(i)}-\mu_j) (x^{(i)}-\mu_j)^T  \right) + \sum_{i=1}^{\tilde{n}} \tilde{w}_j^{(i)} \left( \frac{1}{2} S_j^{-1} -\frac{1}{2} \left( (\tilde{x}^{(i)}-\mu_j) (\tilde{x}^{(i)}-\mu_j)^T \right) \right) \\
+    &= \frac{1}{2} \sum_{i=1}^\nexp w_j^{(i)} ( S_j^{-1}) - \frac{1}{2} \sum_{i=1}^\nexp w_j^{(i)} (x^{(i)}-\mu_j) (x^{(i)}-\mu_j)^T + \frac{1}{2} \sum_{i=1}^{\tilde{n}} \tilde{w}_j^{(i)} ( S_j^{-1}) - \frac{1}{2} \sum_{i=1}^{\tilde{n}} \tilde{w}_j^{(i)} (\tilde{x}^{(i)}-\mu_j)  (\tilde{x}^{(i)}-\mu_j)^T
+    % ### END CODE HERE ###
+    \end{flalign*}
+
+    Next, set the gradient to zero and solve for $S_j$:
+
+    \begin{align*}
+    0 &= 
+    % ### START CODE HERE ###
+    \frac{1}{2} \sum_{i=1}^\nexp w_j^{(i)} ( S_j^{-1}) - \frac{1}{2} \sum_{i=1}^\nexp w_j^{(i)} (x^{(i)}-\mu_j) (x^{(i)}-\mu_j)^T \\
+    &+ \frac{1}{2} \sum_{i=1}^{\tilde{n}} \tilde{w}_j^{(i)} ( S_j^{-1}) - \frac{1}{2} \sum_{i=1}^{\tilde{n}} \tilde{w}_j^{(i)} (\tilde{x}^{(i)}-\mu_j)  (\tilde{x}^{(i)}-\mu_j)^T \\
+     \sum_{i=1}^\nexp w_j^{(i)} ( S_j^{-1}) + \sum_{i=1}^{\tilde{n}} \tilde{w}_j^{(i)} ( S_j^{-1}) &= \sum_{i=1}^\nexp w_j^{(i)} (x^{(i)}-\mu_j) (x^{(i)}-\mu_j)^T + \sum_{i=1}^{\tilde{n}} \tilde{w}_j^{(i)} (\tilde{x}^{(i)}-\mu_j)  (\tilde{x}^{(i)}-\mu_j)^T \\
+     S_j^{-1} \left( \sum_{i=1}^\nexp w_j^{(i)} + \sum_{i=1}^{\tilde{n}} \tilde{w}_j^{(i)} \right) &= \sum_{i=1}^\nexp w_j^{(i)} (x^{(i)}-\mu_j) (x^{(i)}-\mu_j)^T + \sum_{i=1}^{\tilde{n}} \tilde{w}_j^{(i)} (\tilde{x}^{(i)}-\mu_j)  (\tilde{x}^{(i)}-\mu_j)^T \\
+     \Rightarrow \Sigma_j &= \frac{\sum_{i=1}^\nexp w_j^{(i)} (x^{(i)}-\mu_j) (x^{(i)}-\mu_j)^T + \sum_{i=1}^{\tilde{n}} \tilde{w}_j^{(i)} (\tilde{x}^{(i)}-\mu_j)  (\tilde{x}^{(i)}-\mu_j)^T}{\sum_{i=1}^\nexp w_j^{(i)} + \sum_{i=1}^{\tilde{n}} \tilde{w}_j^{(i)}}
+    % ### END CODE HERE ###
+    \end{align*}
+
+    This results in the final set of update expressions:
+    \begin{align*}
+      % ### START CODE HERE ###
+      \phi_j & := \frac{\sum_{i=1}^\nexp w_j^{(i)} + \sum_{i=1}^{\tilde{\nexp}}\tilde{w}_j^{(i)}}{ \nexp + \alpha \tilde{\nexp}}\\
+      \mu_j & :=  \frac{\sum_{i=1}^n w_j^{(i)}x^{(i)} + \sum_{i=1}^{\tilde{n}} \tilde{w}_j^{(i)} \tilde{x}^{(i)}}{\sum_{i=1}^n w_j^{(i)} + \sum_{i=1}^{\tilde{n}} \tilde{w}_j^{(i)}} \\
+      \Sigma_j & := \frac{\sum_{i=1}^\nexp w_j^{(i)} (x^{(i)}-\mu_j) (x^{(i)}-\mu_j)^T + \sum_{i=1}^{\tilde{n}} \tilde{w}_j^{(i)} (\tilde{x}^{(i)}-\mu_j)  (\tilde{x}^{(i)}-\mu_j)^T}{\sum_{i=1}^\nexp w_j^{(i)} + \sum_{i=1}^{\tilde{n}} \tilde{w}_j^{(i)}} \\
+      % ### END CODE HERE ###
+    \end{align*}
+  \end{answer}
+% <SCPD_SUBMISSION_TAG>_2c
+\clearpage
+
+\LARGE
+2.f
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_2f
+  \begin{answer}
+    % ### START CODE HERE ###
+    i. The unsupervised EM algorithm hit the maximum iteration limit ($max_iter = 1000$) in all three runs, indicating difficulty converging. In contrast, the semi-supervised EM algorithm converged in just 21, 26, and 27 iterations, respectively, where the change in log-likelihood fell below the $0.001$ threshold. This shows that semi-supervised EM reached convergence significantly faster. \\
+    ii. Semi-supervised EM produced identical clustering results across all three runs, demonstrating strong stability. Unsupervised EM, on the other hand, showed slight variation: while most point assignments were consistent, a few points were assigned to different clusters depending on the initialization. This reflects greater sensitivity to random starting conditions in the unsupervised case. \\
+    iii. The semi-supervised EM correctly identified the structure of the dataset: three compact clusters and one large, high-variance cluster. In contrast, the unsupervised EM often failed to separate one of the compact Gaussians from the high-variance one, blending them into a single diffuse cluster. As a result, the cluster assignments appeared less coherent and more scattered.
+    % ### END CODE HERE ###
+  \end{answer}
+% <SCPD_SUBMISSION_TAG>_2f
+\clearpage
+
+\LARGE
+3.a
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_3a
+  \begin{answer}
+    % ### START CODE HERE ###
+    We are given that $g$ is the standard normal CDF function:
+    \begin{flalign*}
+        g(w_j^Tx^{(i)})= \int_{-\infty}^{w_j^Tx^{(i)}} \frac{1}{\sqrt{2\pi}} e^{-\frac{t^2}{2}}dt
+    \end{flalign*}
+    Taking the derivative, we get:
+    \begin{flalign*}
+        \frac{d}{d(w_j^Tx^{(i)})} g(w_j^Tx^{(i)}) = g'(w_j^Tx^{(i)}) = \frac{1}{\sqrt{2\pi}} e^{-\frac{(w_j^Tx^{(i)})^2}{2}}
+    \end{flalign*}
+    Log of this becomes:
+    \begin{flalign*}
+        \log (g'(w_j^Tx^{(i)})) = -\frac{1}{2}\log(2\pi) - \frac{(w_j^Tx^{(i)})^2}{2}
+    \end{flalign*}
+    Taking the sum, we get:
+    \begin{flalign*}
+        \sum_{j=1}^d \log (g'(w_j^Tx^{(i)}) = -\frac{d}{2}\log(2\pi) - \sum_{j=1}^d \frac{(w_j^Tx^{(i)})^2}{2}
+    \end{flalign*}
+    Finally, we can say that our log-likelihood function looks as follows:
+    \begin{flalign*}
+        \ell(W) &= \sum_{i=1}^n \left( \log (\vert W \vert) + \sum_{j=1}^d \log (g'(w_j^Tx^{(i)})) \right) \\
+        &= \sum_{i=1}^n \left(\log (\vert W \vert) -\frac{d}{2}\log(2\pi) - \sum_{j=1}^d \frac{(w_j^Tx^{(i)})^2}{2} \right) \\
+        &= \sum_{i=1}^n \left(\log (\vert W \vert) -\frac{d}{2}\log(2\pi) - \frac{1}{2} \vert\vert Wx^{(i)} \vert\vert_2^2 \right) \\
+        &= \sum_{i=1}^n \left(\log (\vert W \vert) -\frac{d}{2}\log(2\pi) - \frac{1}{2} x^{(i)^T}W^TWx^{(i)} \right) \\
+        &= n\log (\vert W \vert) -\frac{nd}{2}\log(2\pi) - \frac{1}{2} \text{tr}(WX^TXW^T)
+    \end{flalign*}
+    Now, taking the gradient with respect to $W$, we get:
+    \begin{flalign*}
+        \nabla_W \ell(W) &= n(W^T)^{-1} - WX^TX
+    \end{flalign*}
+    In order to find a closed form expression for $W$, we set this gradient to $0$ to find when the log-likelihood is at its maximum.
+    \begin{flalign*}
+        &0 = n(W^T)^{-1} - WX^TX \\
+        &\Rightarrow n(W^T)^{-1} = WX^TX \\
+        &nI_{d \times d} = W^TWX^TX \\
+        &\Rightarrow W^TW = n(X^TX)^{-1} \\
+        &\Rightarrow \vert W \vert = \sqrt{n} (X^TX)^{-1/2} \\
+        &\Rightarrow W = Q \cdot \sqrt{n} (X^TX)^{-1/2}
+    \end{flalign*}
+    The rotational invariance ambiguity is expressed in terms of $Q$ satisfying $Q^TQ=I$. In other words, any orthogonal rotation of $W$ satisfies the maximum log-likelihood condition.
+    % ### END CODE HERE ###
+  \end{answer}
+% <SCPD_SUBMISSION_TAG>_3a
+\clearpage
+
+\LARGE
+3.b
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_3b
+  \begin{answer}
+    % ### START CODE HERE ###
+    Our log-likelihood would look as follows for a Laplace distribution:
+    \begin{flalign*}
+        \ell(W) &= \sum_{i=1}^n \left( \log (\vert W \vert) + \sum_{j=1}^d \log (g'(w_j^Tx^{(i)})) \right) \\
+        &= \sum_{i=1}^n \left( \log (\vert W \vert) + \sum_{j=1}^d \log (\frac{1}{2}e^{-\vert w_j^Tx^{(i)}\vert}) \right) \\
+        &= n \log (\vert W \vert) + \sum_{i=1}^n \sum_{j=1}^d -\log(2) - \vert w_j^Tx^{(i)}\vert \\
+        &= n \log (\vert W \vert) -nd \log(2) - \sum_{i=1}^n \vert\vert Wx^{(i)}\vert\vert_1
+    \end{flalign*}
+    Computing the gradient with respect to $W$, we get:
+    \begin{flalign*}
+        \nabla_W \ell(W)= n(W^T)^{-1} - \sum_{i=1}^n \text{sign}(Wx^{(i)}) \cdot x^{(i)^T}
+    \end{flalign*}
+    However, we need to calculate the update rule for a single example. Therefore, we have this gradient with respect to the ith example:
+    \begin{flalign*}
+        \nabla_W^{(i)} \ell(W)= (W^T)^{-1} - \text{sign}(Wx^{(i)}) \cdot x^{(i)^T}
+    \end{flalign*}
+    Therefore, the update rule for a single example is:
+    \begin{flalign*}
+        W := W + \alpha \left((W^T)^{-1} - \text{sign}(Wx^{(i)}) \cdot x^{(i)^T} \right)
+    \end{flalign*}
+    % ### END CODE HERE ###
+  \end{answer}
+% <SCPD_SUBMISSION_TAG>_3b
+\clearpage
+
+\LARGE
+4.a
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_4a
+  \begin{answer}
+    % ### START CODE HERE ###
+    1. Assume $\beta = X^T (XX^T)^{-1} \vec{y} + \zeta$ for some $\zeta$ such that $\zeta^Tx^{(i)}=0, \forall 1 \le i \le n$.
+    
+    \begin{flalign*}
+        J(\beta) &= \frac{1}{2n} \vert\vert X\beta - \vec{y} \vert\vert_2^2 \\
+        &= \frac{1}{2n} \vert\vert X(X^T (XX^T)^{-1} \vec{y} + \zeta) - \vec{y} \vert\vert_2^2 \\
+        &= \frac{1}{2n} \vert\vert I_{n \times n} \vec{y} + X\zeta) - \vec{y} \vert\vert_2^2 \\
+        &=\frac{1}{2n} \vert\vert X\zeta \vert\vert_2^2 \\
+        &=\frac{1}{2n} \vert\vert \left[ \begin{array}{c} x^{(1)^T} \zeta \\ x^{(2)^T} \zeta \\ \vdots \\ x^{(n)^T} \zeta  \end{array} \right] \vert\vert_2^2 \\
+        &=\frac{1}{2n} \vert\vert \vec{0} \vert\vert_2^2 \qquad \because \zeta^Tx^{(i)}=0, \forall 1 \le i \le n \\
+        &= 0
+    \end{flalign*}
+
+    2. Assume $J(\beta) = 0$.
+    \begin{flalign*}
+        0 &= v  \\
+        &= \vert\vert X\beta - \vec{y} \vert\vert_2^2 \\
+        &= \vert\vert \left[ \begin{array}{c} x^{(1)^T} \beta - y_1 \\ x^{(2)^T}\beta - y_2 \\ \vdots \\ x^{(n)^T}\beta - y_n \end{array} \right] \vert\vert_2^2 \\
+        &= \sum_{i=1}^n  (x^{(i)^T}\beta - y_i)^2 \\
+        &\Rightarrow x^{(i)^T}\beta = y_i \qquad \forall 1\le i \le n \\
+        &\Rightarrow X\beta = \vec{y} \\
+        &\text{One solution is } \beta_0 = X^T(XX^T)^{-1} \vec{y} \text{ since } X(X^T(XX^T)^{-1}\vec{y})=I_{d \times d}\vec{y} =\vec{y} \\
+        &\text{But if we say } \exists\zeta \text{ s.t. } \zeta^T x^{(i)}=0, \forall 1 \le i \le n \text{ or in other words } \zeta \in \text{ker}(X), \\\
+        &\text{we can get the complete solution of } \beta = \beta_0 + \zeta = X^T(XX^T)^{-1} \vec{y} + \zeta \\
+        &\text{Verification: } X(X^T(XX^T)^{-1} \vec{y} + \zeta) = I_{n \times n} \vec{y} + X\zeta \\
+        &= \vec{y} + \left[ \begin{array}{c} x^{(1)^T} \zeta \\ x^{(2)^T} \zeta \\ \vdots \\ x^{(n)^T} \zeta  \end{array} \right] = \vec{y} + \vec{0} = \vec{y} \qquad \because \zeta^Tx^{(i)}=0, \forall 1 \le i \le n \\
+    \end{flalign*}
+
+    
+    % ### END CODE HERE ###
+  \end{answer}
+% <SCPD_SUBMISSION_TAG>_4a
+\clearpage
+
+\LARGE
+4.b
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_4b
+  \begin{answer}
+    % ### START CODE HERE ###
+    Let's first prove that $\vert\vert \beta \vert\vert_2^2 = \vert\vert \rho \vert\vert_2^2 + \vert\vert \zeta \vert\vert_2^2$ where $\beta = X^T (XX^T)^{-1} \vec{y} + \zeta$ for some $\zeta$ such that $\zeta^Tx^{(i)}=0, \forall 1 \le i \le n$ and $\rho = \beta_0 = X^T(XX^T)^{-1}\vec{y}$.
+    \begin{flalign*}
+        \vert\vert \beta \vert\vert_2^2 &= \vert\vert X^T (XX^T)^{-1} \vec{y} + \zeta \vert\vert_2^2 \\
+        &= \vert\vert \rho \vert\vert_2^2 + \vert\vert \zeta \vert\vert_2^2 + 2 \langle \rho, \zeta \rangle \\
+        &= \vert\vert \rho \vert\vert_2^2 + \vert\vert \zeta \vert\vert_2^2  \qquad \because \langle \rho, \zeta \rangle=0 \text{ meaning that the null space is orthogonal to the row space} \quad (\rho \perp \zeta)
+    \end{flalign*}
+    Since $\vert\vert \zeta \vert\vert_2^2 \ge 0$ for any $\zeta$, $\vert\vert \rho \vert\vert_2^2 \le \vert\vert \beta \vert\vert$ for all $\rho$ and $\beta$.
+    % ### END CODE HERE ###
+  \end{answer}
+% <SCPD_SUBMISSION_TAG>_4b
+\clearpage
+
+\LARGE
+4.d
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_4d
+  \begin{answer}
+    % ### START CODE HERE ###
+    Proof by induction that $\beta^{(t)}$ will always be a linear combination of $\{x^{(1)},x^{(2)}, \cdots , x^{(n)}\}$ for any $t \ge 0$. \\ \\
+    1. Base Case
+    \begin{flalign*}
+        \beta^{(0)} &= \vec{0} -\frac{\eta}{n}X^T(X\vec{0} - \vec{y}) \\
+        &= -\frac{\eta}{n}X^T(0 - \vec{y}) \\
+        &= \frac{\eta}{n}X^T \vec{y} \\
+        &= X^T v^{(0)} \text{ for } v^{(0)} = \frac{\eta}{n} \vec{y}
+    \end{flalign*}
+    2. Inductive Step
+    \begin{flalign*}
+        \text{Assume } \beta^{(k)} &= X^Tv^{(k)} \\
+        \beta^{(k+1)} &= \beta^{(k)} - \frac{\eta}{n}X^T(X\beta^{(k)} - \vec{y}) \\
+        &= X^Tv^{(k)} - \frac{\eta}{n}X^T(X(X^Tv^{(k)}) - \vec{y}) \\
+        &= X^Tv^{(k)} - X^Tv^{(i)} \qquad v^{(i)} = \frac{\eta}{n}(X(X^Tv^{(k)}) - \vec{y}) \\
+        &= X^Tv^{(k+1)} \qquad v^{(k+1)} = v^{(k)}-v^{(i)}
+    \end{flalign*}
+
+    We have completed the proof by induction. \\
+
+    Part 2. If $\hat{\beta} = X^Tv^{(t)}$ for some $v^{(t)}$ and $J(\hat{\beta})=0$, then
+    \begin{flalign*}
+        0 &= v  \\
+        &= \vert\vert X\hat{\beta} - \vec{y} \vert\vert_2^2 \\
+        &= \vert\vert \left[ \begin{array}{c} x^{(1)^T} \hat{\beta} - y_1 \\ x^{(2)^T}\hat{\beta} - y_2 \\ \vdots \\ x^{(n)^T}\hat{\beta} - y_n \end{array} \right] \vert\vert_2^2 \\
+        &= \sum_{i=1}^n  (x^{(i)^T}\hat{\beta} - y_i)^2 \\
+        &\Rightarrow x^{(i)^T}\hat{\beta} = y_i \qquad \forall 1\le i \le n \\
+        &\Rightarrow X\hat{\beta} = \vec{y}
+    \end{flalign*}
+    Now the general solution is $\beta = X^T(XX^T)^{-1} \vec{y} + \zeta$. However, we know that our solution for this GD algorithm $\hat{\beta}$ is a linear combination of $\{x^{(1)},x^{(2)}, \cdots , x^{(n)}\}$ or in other words $\hat{\beta}=X^Tv^{(t)}$ for some $v^{(t)}$. Any $\beta$ that has the $\zeta \in \text{ker}(x)$ term (which is orthogonal to $\text{col}(x^T)$ will not be a linear combination of $\{x^{(1)},x^{(2)}, \cdots , x^{(n)}\}$, so the only possible solution occurs when $\zeta=0$. Therefore, the only solution to the equation $X\hat{\beta} = \vec{y}$ is $\hat{\beta}=X^T(XX^T)^{-1}\vec{y} = \rho$. We have proved that $\hat{\beta}$ is the minimum norm solution.
+    % ### END CODE HERE ###
+  \end{answer}
+% <SCPD_SUBMISSION_TAG>_4d
+\clearpage
+
+\LARGE
+4.e
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_4e
+  \begin{answer}
+    % ### START CODE HERE ###
+    For the linear model, we have $\beta = X^T (XX^T)^{-1} \vec{y} + \zeta$ for some $\zeta$ such that $\zeta^Tx^{(i)}=0, \forall 1 \le i \le n$.
+    For the quadratically parameterized model $f_{\theta,\phi}(x)=x^T(\theta^{\odot2}-\phi^{\odot2})$ and $y=x^T((\theta^\star)^{\odot2}-(\phi^\star)^{\odot2})$, let's define $v = \theta^{\odot2}-\phi^{\odot2}$ and $v^\star = (\theta^\star)^{\odot2}-(\phi^\star)^{\odot2}$. we can rewrite $f_{\theta,\phi}(x)$ and $y$ as follows:
+    \begin{flalign*}
+        f_{\theta,\phi}(x) = x^Tu \\
+        y = x^Tu^{\star}
+    \end{flalign*}
+    The cost function then turns into the following:
+    \begin{flalign*}
+        J(\theta,\phi)=\frac{1}{4n} \sum_{i=1}^n (f_{\theta,\phi}(x^{(i)})-y^{(i)})^2 = \frac{1}{4n} \vert\vert Xu-\vec{y} \vert\vert_2^2
+    \end{flalign*}
+    This has now turned into the same form as the linear least squares problem.
+    Now we can equate $u$ with $\beta$, completing the mapping:
+    \begin{flalign*}
+        u = X^T (XX^T)^{-1} \vec{y} + \zeta
+    \end{flalign*}
+    Therefore, there exists infinitely many solutions for $u$ with infinitely many ways to define $u$ using differing $(\theta,\phi)$ pairs, all satisfying $Xu = y \Rightarrow J(\theta,\phi)=0$.
+    % ### END CODE HERE ###
+  \end{answer}
+% <SCPD_SUBMISSION_TAG>_4e
+\clearpage
+
+\LARGE
+4.g
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_4g
+  \begin{answer}
+    % ### START CODE HERE ###
+    1. All three models can fit the training set. \\
+    2. The $\alpha = 0.01$ achieves the best validation error.
+    % ### END CODE HERE ###
+  \end{answer}
+% <SCPD_SUBMISSION_TAG>_4g
+\clearpage
+
+\LARGE
+4.i
+\normalsize
+
+% <SCPD_SUBMISSION_TAG>_4i
+  \begin{answer}
+    % ### START CODE HERE ###
+    Using the same initialization and learning rate $\alpha = 0.1$, the performance of SGD varied depending on the batch size:
+    \begin{itemize}
+        \item SGD with batch size $ = 1$ achieved the lowest validation error, significantly outperforming full-batch gradient descent.
+        \item SGD with batch size $= 5$ also performed slightly better than full GD, but the improvement was smaller.
+        \item SGD with batch size $= 40$ yielded approximately the same result as gradient descent.
+    \end{itemize}
+    This suggests that stochasticity introduced by smaller batches helped SGD escape suboptimal regions or local minima, leading to better generalization, particularly with batch size 1. However, as the batch size increases, SGD behaves more like standard gradient descent, and its advantage diminishes.
+    % ### END CODE HERE ###
+  \end{answer}
+% <SCPD_SUBMISSION_TAG>_4i
+\clearpage
+
+
+% <SCPD_SUBMISSION_TAG>_entire_submission
+
+\end{document}
